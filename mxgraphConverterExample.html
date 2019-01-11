@@ -1,0 +1,251 @@
+<html>
+  <head>
+    <!-- Sets the basepath for the library if not in same directory -->
+    <script type="text/javascript">mxBasePath = 'https://jgraph.github.io/mxgraph/javascript/src';</script>
+    <!-- Loads and initializes the library -->
+    <script type="text/javascript" src="./javascript/src/js/mxClient.js"></script>
+    <script type="text/javascript" src="./JsonCodec.js"></script>
+    <link rel="stylesheet" href="mxgraph.css">
+  </head>
+
+  <script type="text/javascript">
+    function main(container)
+    {
+      const graphX = new GraphX(document.getElementById('graphContainer'));
+
+      document.getElementById('buttons').appendChild(mxUtils.button('From JSON', () => {
+        const dataModel = JSON.parse(document.getElementById('from').innerHTML);
+        graphX.render(dataModel);
+      }));
+
+      document.getElementById('buttons').appendChild(mxUtils.button('To JSON', () => {
+        const jsonNodes = graphX.getJsonModel();
+        document.getElementById('to').innerHTML = `<pre>${syntaxHighlight(stringifyWithoutCircular(jsonNodes))}</pre>`;
+      }));
+    }
+  </script>
+
+  <body onload="main(document.getElementById('graphContainer'))">
+    <!-- Creates a container for the graph with a grid wallpaper -->
+    <div id="graphContainer"
+		  style="position:relative;overflow:hidden;width:1430px;height:400px;background:url('editors/images/grid.gif');cursor:default;">
+    </div>
+    <div id="buttons"></div>
+    <table id="json">
+      <tr>
+        <td>
+          <textarea id="from">{
+        "graph": [
+            {
+                "value": {
+                    "name": "Daffy Duck"
+                },
+                "geometry": {
+                    "x": 90,
+                    "y": 60,
+                    "width": 120,
+                    "height": 30,
+                    "relative": false,
+                    "TRANSLATE_CONTROL_POINTS": true,
+                    "alternateBounds": null,
+                    "sourcePoint": null,
+                    "targetPoint": null,
+                    "points": null,
+                    "offset": null
+                },
+                "id": "2",
+                "vertex": true,
+                "connectable": true,
+                "parent": "1",
+                "source": null,
+                "target": null,
+                "edges": [
+                    {
+                        "value": "Edge",
+                        "geometry": {
+                            "x": 0,
+                            "y": 0,
+                            "width": 0,
+                            "height": 0,
+                            "relative": true
+                        },
+                        "id": "4",
+                        "edge": true,
+                        "parent": "1",
+                        "source": "2",
+                        "target": "3",
+                        "mxObjectId": "mxCell#7"
+                    }
+                ],
+                "mxObjectId": "mxCell#6"
+            },
+            {
+                "value": {
+                    "name": "Bugs Bunny"
+                },
+                "geometry": {
+                    "x": 1020,
+                    "y": 60,
+                    "width": 120,
+                    "height": 30,
+                    "relative": false,
+                    "TRANSLATE_CONTROL_POINTS": true,
+                    "alternateBounds": null,
+                    "sourcePoint": null,
+                    "targetPoint": null,
+                    "points": null,
+                    "offset": null
+                },
+                "id": "3",
+                "vertex": true,
+                "connectable": true,
+                "parent": "1",
+                "source": null,
+                "target": null,
+                "edges": [
+                    {
+                        "value": "Edge",
+                        "geometry": {
+                            "x": 0,
+                            "y": 0,
+                            "width": 0,
+                            "height": 0,
+                            "relative": true
+                        },
+                        "id": "4",
+                        "edge": true,
+                        "parent": "1",
+                        "source": "2",
+                        "target": "3",
+                        "mxObjectId": "mxCell#7"
+                    }
+                ],
+                "mxObjectId": "mxCell#8"
+            },
+            {
+                "value": "Edge",
+                "geometry": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 0,
+                    "height": 0,
+                    "relative": true
+                },
+                "id": "4",
+                "edge": true,
+                "parent": "1",
+                "source": "2",
+                "target": "3",
+                "mxObjectId": "mxCell#7"
+            },
+            {
+                "value": {
+                    "name": "Elmer Fudd"
+                },
+                "geometry": {
+                    "x": 90,
+                    "y": 220,
+                    "width": 120,
+                    "height": 30,
+                    "relative": false,
+                    "TRANSLATE_CONTROL_POINTS": true,
+                    "alternateBounds": null,
+                    "sourcePoint": null,
+                    "targetPoint": null,
+                    "points": null,
+                    "offset": null
+                },
+                "id": "5",
+                "vertex": true,
+                "connectable": true,
+                "parent": "1",
+                "source": null,
+                "target": null,
+                "edges": [
+                    {
+                        "value": "Edge",
+                        "geometry": {
+                            "x": 0,
+                            "y": 0,
+                            "width": 0,
+                            "height": 0,
+                            "relative": true
+                        },
+                        "id": "7",
+                        "edge": true,
+                        "parent": "1",
+                        "source": "5",
+                        "target": "6",
+                        "mxObjectId": "mxCell#10"
+                    }
+                ],
+                "mxObjectId": "mxCell#9"
+            },
+            {
+                "value": {
+                    "name": "Tasmanian Devil"
+                },
+                "geometry": {
+                    "x": 1020,
+                    "y": 220,
+                    "width": 120,
+                    "height": 30,
+                    "relative": false,
+                    "TRANSLATE_CONTROL_POINTS": true,
+                    "alternateBounds": null,
+                    "sourcePoint": null,
+                    "targetPoint": null,
+                    "points": null,
+                    "offset": null
+                },
+                "id": "6",
+                "vertex": true,
+                "connectable": true,
+                "parent": "1",
+                "source": null,
+                "target": null,
+                "edges": [
+                    {
+                        "value": "Edge",
+                        "geometry": {
+                            "x": 0,
+                            "y": 0,
+                            "width": 0,
+                            "height": 0,
+                            "relative": true
+                        },
+                        "id": "7",
+                        "edge": true,
+                        "parent": "1",
+                        "source": "5",
+                        "target": "6",
+                        "mxObjectId": "mxCell#10"
+                    }
+                ],
+                "mxObjectId": "mxCell#11"
+            },
+            {
+                "value": "Edge",
+                "geometry": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 0,
+                    "height": 0,
+                    "relative": true
+                },
+                "id": "7",
+                "edge": true,
+                "parent": "1",
+                "source": "5",
+                "target": "6",
+                "mxObjectId": "mxCell#10"
+            }
+        ]
+    }
+          </textarea>
+        </td>
+        <td><div id="to"></div></td>
+      </tr>
+    </table>
+  </body>
+</html>
