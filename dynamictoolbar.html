@@ -17,6 +17,7 @@
   <script type="text/javascript" src="./javascript/custom/myMxGeometry.js"></script>
   <script type="text/javascript" src="./javascript/custom/resizableCell.js"></script>
   <script type="text/javascript" src="./javascript/custom/unresizableCell.js"></script>
+  <script type="text/javascript" src="./javascript/custom/connectableCell.js"></script>
 
 	<!-- Example code -->
 	<script type="text/javascript">
@@ -96,7 +97,7 @@
 
 				var addVertex = function(icon, w, h, style)
 				{
-					var vertex = new unresizableCell(null, new myMxGeometry(0, 0, w, h), style);
+					var vertex = new connectableCell(null, new myMxGeometry(0, 0, w, h), style);
 					vertex.setVertex(true);
 
 					var img = addToolbarItem(graph, toolbar, vertex, icon);
