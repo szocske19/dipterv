@@ -1,0 +1,24 @@
+{
+  "name": "dipterv",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dynamictoolbar.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/szocske19/dipterv.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/szocske19/dipterv/issues"
+  },
+  "homepage": "https://github.com/szocske19/dipterv#readme",
+  "devDependencies": {
+    "eslint": "^5.12.1",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.15.0"
+  }
+}
