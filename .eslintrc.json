@@ -1,14 +1,25 @@
 {
     "extends": "airbnb-base",
     "plugins": [
-        "import"
+        "import",        
+        "html"
     ],
     "rules": {
         "import/newline-after-import": "off",
         "linebreak-style": "off",
         "no-trailing-spaces": "off",
-        "no-tabs": "warn",
+        "no-tabs": "off",
         "spaced-comment": "warn",
-        "no-undef": 1 
-    }
+        "no-undef": 1,
+        "indent":"off",
+        "brace-style": "off",
+        "no-var": "off",
+        "vars-on-top": "off"
+    },
+    "eslint.workingDirectories": [
+        { 
+			"directory": "javascript", 
+			"changeProcessCWD": true
+		}        
+    ]
 }
