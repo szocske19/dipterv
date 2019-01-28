@@ -15,11 +15,5 @@
         "brace-style": "off",
         "no-var": "off",
         "vars-on-top": "off"
-    },
-    "eslint.workingDirectories": [
-        { 
-			"directory": "javascript", 
-			"changeProcessCWD": true
-		}        
-    ]
+    }
 }
