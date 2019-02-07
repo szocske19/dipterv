@@ -1,5 +1,5 @@
-<mxDefaultToolbar>
-	<add as="save" action="save" icon="images/save.gif"/>
+<mxVWQLToolbar>
+	<!-- <add as="save" action="save" icon="images/save.gif"/>
 	<add as="show" action="show" icon="images/preview.gif"/>
 	<add as="print" action="print" icon="images/print.gif"/>
 	<add as="exportImage" action="exportImage" icon="images/image.gif"/>
@@ -24,7 +24,7 @@
 			}
 		}
 	]]></add>
-	<br/><hr/>
+	<br/><hr/> -->
 	<add as="undo" action="undo" icon="images/undo.gif"/>
 	<add as="redo" action="redo" icon="images/redo.gif"/>
 	<br/><hr/>
@@ -33,15 +33,13 @@
 	<add as="paste" action="paste" icon="images/paste.gif"/>
 	<add as="delete" action="delete" icon="images/delete.gif"/>
 	<br/><hr/>
-	<add as="group" action="group" icon="images/group.gif"/>
+	<!-- <add as="group" action="group" icon="images/group.gif"/>
 	<add as="ungroup" action="ungroup" icon="images/ungroup.gif"/>
-	<br/><hr/>
-	<add as="Swimlane" template="swimlane" icon="images/swimlane.gif"/>
-	<add as="Task" template="task" icon="images/rectangle.gif"/>
-	<add as="Subprocess" template="subprocess" icon="images/rounded.gif"/>
-	<add as="Ellipse" template="shape" style="ellipse" icon="images/ellipse.gif"/>
-	<add as="Rhombus" template="shape" style="rhombus" icon="images/rhombus.gif"/>
-	<add as="Actor" template="shape" style="actor" icon="images/actor.gif"/>
+	<br/><hr/>	 -->
+	<separator name = "pattern"/>
+	<add as="Pattern" template="Pattern" icon="images/swimlane.gif"/>
+	<add as="Parameter" template="Parameter" icon="images/rectangle.gif"/>
+	<add as="Pattern Body" template="Pattern Body" icon="images/rounded.gif"/>
 	<br/><hr/>
 	<add as="Event" template="symbol" style="symbol;image=images/symbols/event.png" icon="images/symbols/small_event.gif"/>
 	<add as="Event (Intermediate)" template="symbol" style="symbol;image=images/symbols/event_intermediate.png" icon="images/symbols/small_event_intermediate.gif"/>
@@ -71,4 +69,4 @@
 	<add as="tasks" action="toggleTasks" icon="images/tasks.gif"/>
 	<add as="help" action="toggleHelp" icon="images/help.gif"/>
 	<add as="console" action="toggleConsole" icon="images/console.gif"/>
-</mxDefaultToolbar>
+</mxVWQLToolbar>

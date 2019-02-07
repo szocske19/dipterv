@@ -16,6 +16,8 @@
         "no-var": "off",
         "vars-on-top": "off",
         "space-before-function-paren": "off",
-        "no-shadow": "off"
+        "no-shadow": "off",
+        "func-names": "off"
+
     }
 }
