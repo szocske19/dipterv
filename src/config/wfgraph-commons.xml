@@ -17,6 +17,19 @@
 			return !this.isSwimlane(cell.parent);
 		}
 	]]></add>
+	<add as="isValidRoot"><![CDATA[
+		function(cell)
+		{
+			return !this.isSwimlane(cell);
+		}
+	]]></add>
+	<add as="isCellFoldable"><![CDATA[
+		function(cell, collapse)
+		{
+			return !this.isSwimlane(cell) &&
+				cell.getChildCount() > 0;
+		}
+	]]></add>
 	<add as="getTooltipForCell"><![CDATA[
 		function(cell)
 		{
@@ -110,9 +123,9 @@
 		</add>
 		<add as="swimlane">
 			<add as="shape" value="swimlane"/>
+			<add as="rounded" value="1"/>
 			<add as="fontSize" value="12"/>
 			<add as="startSize" value="23"/>
-			<add as="horizontal" value="0"/>
 			<add as="verticalAlign" value="top"/>
 			<add as="fontColor" value="white"/>
 			<add as="labelBackgroundColor" value="none"/>

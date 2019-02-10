@@ -3,10 +3,10 @@
 	<add as="show" action="show" icon="images/preview.gif"/>
 	<add as="print" action="print" icon="images/print.gif"/>
 	<add as="exportImage" action="exportImage" icon="images/image.gif"/>
-	<br/><hr/>
+	<br/><hr/> -->
 	<add as="select" mode="select" icon="images/select.gif"/>
 	<add as="pan" mode="pan" icon="images/pan.gif"/>
-	<add as="connect" mode="connect" icon="images/connect.gif"><![CDATA[
+	<!-- <add as="connect" mode="connect" icon="images/connect.gif"><![CDATA[
 		function (editor)
 		{
 			if (editor.defaultEdge != null)
@@ -23,8 +23,8 @@
 				editor.defaultEdge.style = 'straightEdge';
 			}
 		}
-	]]></add>
-	<br/><hr/> -->
+	]]></add> -->
+	<br/><hr/>
 	<add as="undo" action="undo" icon="images/undo.gif"/>
 	<add as="redo" action="redo" icon="images/redo.gif"/>
 	<br/><hr/>
@@ -33,18 +33,19 @@
 	<add as="paste" action="paste" icon="images/paste.gif"/>
 	<add as="delete" action="delete" icon="images/delete.gif"/>
 	<br/><hr/>
-	<!-- <add as="group" action="group" icon="images/group.gif"/>
+	<!-- <add as="group" action="group" icon="images/group.gif"/>R
 	<add as="ungroup" action="ungroup" icon="images/ungroup.gif"/>
 	<br/><hr/>	 -->
 	<separator name = "pattern"/>
-	<add as="Pattern" template="Pattern" icon="images/swimlane.gif"/>
-	<add as="Parameter" template="Parameter" icon="images/rectangle.gif"/>
-	<add as="Pattern Body" template="Pattern Body" icon="images/rounded.gif"/>
+	<add as="Pattern" template="swimlane" icon="images/swimlane.gif"/>
+	<add as="Parameter" template="symbol" icon="images/rectangle.gif"/>
+	<add as="Pattern Body" template="symbol" icon="images/rounded.gif"/>
+	<separator name = "Constraints"/>
 	<br/><hr/>
-	<add as="Event" template="symbol" style="symbol;image=images/symbols/event.png" icon="images/symbols/small_event.gif"/>
-	<add as="Event (Intermediate)" template="symbol" style="symbol;image=images/symbols/event_intermediate.png" icon="images/symbols/small_event_intermediate.gif"/>
-	<add as="Event (End)" template="symbol" style="symbol;image=images/symbols/event_end.png" icon="images/symbols/small_event_end.gif"/>
-	<add as="Timer" template="symbol" style="symbol;image=images/symbols/timer.png" icon="images/symbols/small_timer.gif"/>
+	<add as="Event" template="hline" style="symbol;image=images/symbols/event.png" icon="images/symbols/small_event.gif"/>
+	<add as="Event (Intermediate)" template="shape" style="symbol;image=images/symbols/event_intermediate.png" icon="images/symbols/small_event_intermediate.gif"/>
+	<add as="Event (End)" template="shape" style="symbol;image=images/symbols/event_end.png" icon="images/symbols/small_event_end.gif"/>
+	<add as="Timer" template="shape" style="symbol;image=images/symbols/timer.png" icon="images/symbols/small_timer.gif"/>
 	<add as="Message" template="symbol" style="symbol;image=images/symbols/message.png" icon="images/symbols/small_message.gif"/>
 	<add as="Message (Intermediate)" template="symbol" style="symbol;image=images/symbols/message_intermediate.png" icon="images/symbols/small_message_intermediate.gif"/>
 	<add as="Message (End)" template="symbol" style="symbol;image=images/symbols/message_end.png" icon="images/symbols/small_message_end.gif"/>

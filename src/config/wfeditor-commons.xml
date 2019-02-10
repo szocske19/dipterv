@@ -19,42 +19,49 @@
 	</Array>
 	<Array as="templates">
 		<add as="group">
-			<Group label="" description="" href="">
+			<Group label="" description="">
 				<mxCell vertex="1" style="group" connectable="0"/>
 			</Group>
 		</add>
 		<add as="edge">
 			<Edge label="" description="">
 				<mxCell edge="1">
-					<mxGeometry as="geometry" relative="1"/>
+					<mxGeometry as="geometry" isRelative="1"/>
 				</mxCell>
 			</Edge>
 		</add>
 		<add as="swimlane">
-			<Swimlane label="Swimlane" description="" href="">
+			<Swimlane label="Pattern" customAttribute="text value">
 				<mxCell vertex="1" style="swimlane" connectable="0">
-					<mxGeometry as="geometry" width="300" height="160"/>
+					<mxGeometry as="geometry" width="220" height="480"/>
 				</mxCell>
 			</Swimlane>
 		</add>
 		<add as="task">
-			<Task label="Task" description="" href="">
+			<Task label="Task">
 				<mxCell vertex="1">	
-					<mxGeometry as="geometry" width="72" height="32"/>
+					<mxGeometry as="geometry" width="80" height="30"/>
 				</mxCell>
 			</Task>
 		</add>
 		<add as="subprocess">
-			<Subprocess label="Subprocess" description="" href="">
+			<Subprocess label="Subprocess">
 				<mxCell vertex="1" style="rounded">		
-					<mxGeometry as="geometry" width="72" height="32"/>
+					<mxGeometry as="geometry" width="80" height="30"/>
 				</mxCell>
 			</Subprocess>
 		</add>
 		<add as="shape">
-			<Shape label="" description="" href="">
+			<Shape label="Element">
 				<mxCell vertex="1" style="ellipse">		
-					<mxGeometry as="geometry" width="32" height="32"/>
+					<mxGeometry as="geometry" width="60" height="50"/>
+				</mxCell>
+			</Shape>
+		</add>
+		<add as="hline">
+			<Shape label="">
+				<mxCell vertex="1" style="ellipse">		
+					<mxGeometry as="geometry" width="60" height="10"/>
 				</mxCell>
 			</Shape>
 		</add>
