@@ -43,7 +43,7 @@
 	<separator name = "Constraints"/>
 	<br/><hr/>
 	<add as="Event" template="hline" style="symbol;image=images/symbols/event.png" icon="images/symbols/small_event.gif"/>
-	<add as="Event (Intermediate)" template="shape" style="symbol;image=images/symbols/event_intermediate.png" icon="images/symbols/small_event_intermediate.gif"/>
+	<add as="Event (Intermediate)" template="task" style="symbol;image=images/symbols/event_intermediate.png" icon="images/symbols/small_event_intermediate.gif"/>
 	<add as="Event (End)" template="shape" style="symbol;image=images/symbols/event_end.png" icon="images/symbols/small_event_end.gif"/>
 	<add as="Timer" template="shape" style="symbol;image=images/symbols/timer.png" icon="images/symbols/small_timer.gif"/>
 	<add as="Message" template="symbol" style="symbol;image=images/symbols/message.png" icon="images/symbols/small_message.gif"/>

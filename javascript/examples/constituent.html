@@ -16,6 +16,15 @@
 	<!-- Loads and initializes the library -->
 	<script type="text/javascript" src="../src/js/mxClient.js"></script>
 
+	<style>
+	pre {outline: 1px solid #ccc; padding: 5px; margin: 5px; }
+		.string { color: green; }
+		.number { color: darkorange; }
+		.boolean { color: blue; }
+		.null { color: magenta; }
+		.key { color: red; }
+	</style>
+
 	<!-- Example code -->
 	<script type="text/javascript">
 		
@@ -94,10 +103,44 @@
 				{
 					// Updates the display
 					graph.getModel().endUpdate();
-				}
+				}				
+				
+				var button = mxUtils.button('View XML', function()
+				{
+					var encoder = new mxCodec();
+					var node = encoder.encode(graph.getModel());
+					xml = mxUtils.getPrettyXml(node);
+					output = `<pre>${syntaxHighlight(xml)}</pre>`
+					document.getElementById('to').innerHTML = output;
+				});
+				
+				document.body.insertBefore(button, container.nextSibling);
 			}
 		};
 	</script>
+
+	
+
+	<script>
+		function syntaxHighlight(json) {
+			json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+			return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
+				var cls = 'number';
+				if (/^"/.test(match)) {
+					if (/:$/.test(match)) {
+						cls = 'key';
+					} else {
+						cls = 'string';
+					}
+				} else if (/true|false/.test(match)) {
+					cls = 'boolean';
+				} else if (/null/.test(match)) {
+					cls = 'null';
+				}
+				return '<span class="' + cls + '">' + match + '</span>';
+			});
+		}
+	  </script>
 </head>
 
 <!-- Page passes the container for the graph to the program -->
@@ -107,5 +150,6 @@
 	<div id="graphContainer"
 		style="position:relative;overflow:hidden;width:321px;height:241px;background:url('editors/images/grid.gif');cursor:default;">
 	</div>
+	<div id="to" contenteditable="true"></div>
 </body>
 </html>

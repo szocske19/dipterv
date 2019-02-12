@@ -39,9 +39,9 @@
 		</add>
 		<add as="task">
 			<Task label="Task">
-				<mxCell vertex="1">	
+				<unresizableCell vertex="1">	
 					<mxGeometry as="geometry" width="80" height="30"/>
-				</mxCell>
+				</unresizableCell>
 			</Task>
 		</add>
 		<add as="subprocess">
