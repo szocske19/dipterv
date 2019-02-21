@@ -10773,6 +10773,7 @@ mxGraph.prototype.getDropTarget = function(cells, evt, cell, clone)
 		mxEvent.getClientX(evt), mxEvent.getClientY(evt));
 	pt.x -= this.panDx;
 	pt.y -= this.panDy;
+	// var swimlane = this.getCellAt(pt.x, pt.y);
 	var swimlane = this.getSwimlaneAt(pt.x, pt.y);
 	
 	if (cell == null)

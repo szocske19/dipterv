@@ -378,6 +378,15 @@ mxDefaultToolbar.prototype.drop = function(vertex, evt, target)
 		}
 		
 		this.insert(vertex, evt, target);
+		
+		if(vertex.port == 1){
+			model.beginUpdate();
+			vertex.geometry.relative = true;
+			vertex.geometry.offset = new mxPoint(-10, -10);
+			vertex.geometry.x = 0.5
+			vertex.geometry.y = 0.5			
+			model.endUpdate();
+		}
 	}
 	else
 	{

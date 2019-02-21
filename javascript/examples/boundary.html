@@ -31,6 +31,20 @@
 			}
 			else
 			{
+
+				var button = mxUtils.button('View XML', function()
+				{
+					var encoder = new mxCodec();
+					var node = encoder.encode(graph.getModel());
+					// xml = mxUtils.getPrettyXml(node);
+					// output = `<pre>${syntaxHighlight(xml)}</pre>`
+					// document.getElementById('to').innerHTML = output;
+					mxUtils.popup(mxUtils.getPrettyXml(node), true);
+				});
+				
+				var to = document.getElementById('xmlViewer');
+				to.insertBefore(button, document.getElementById('to'));
+
 				// Disables the built-in context menu
 				mxEvent.disableContextMenu(container);
 				
@@ -215,6 +229,9 @@
 	<!-- Creates a container for the graph with a grid wallpaper -->
 	<div id="graphContainer"
 		style="position:relative;overflow:hidden;width:321px;height:241px;background:url('editors/images/grid.gif');cursor:default;">
+	</div>
+	<div id="xmlViewer" style="float: left;margin-left: 100;" >
+		<div id="to"; contenteditable="true";></div>
 	</div>
 </body>
 </html>

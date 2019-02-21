@@ -43,6 +43,20 @@
 			}
 			else
 			{
+
+				var button = mxUtils.button('View XML', function()
+				{
+					var encoder = new mxCodec();
+					var node = encoder.encode(graph.getModel());
+					// xml = mxUtils.getPrettyXml(node);
+					// output = `<pre>${syntaxHighlight(xml)}</pre>`
+					// document.getElementById('to').innerHTML = output;
+					mxUtils.popup(mxUtils.getPrettyXml(node), true);
+				});
+				
+				var to = document.getElementById('xmlViewer');
+				to.insertBefore(button, document.getElementById('to'));
+
 				// Assigns some global constants for general behaviour, eg. minimum
 				// size (in pixels) of the active region for triggering creation of
 				// new connections, the portion (100%) of the cell area to be used
@@ -605,6 +619,11 @@
 	<!-- Creates a container for the sidebar -->
 	<div id="toolbarContainer"
 		style="position:absolute;white-space:nowrap;overflow:hidden;top:0px;left:0px;max-height:24px;height:36px;right:0px;padding:6px;background-image:url('images/toolbar_bg.gif');">
+	
+		<div id="xmlViewer" style="float: left;margin-left: 100;" >
+			<div id="to"; contenteditable="true";></div>
+		</div>
+	
 	</div>
 
 	<!-- Creates a container for the toolboox -->
