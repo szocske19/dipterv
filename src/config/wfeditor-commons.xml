@@ -4,12 +4,6 @@
 	forcedInserting="0"
 	swimlaneRequired="0">
 	<include name="config/editor-commons.xml"/>
-	<add as="onInit">
-		function ()
-		{
-			this.showTasks();
-		}
-	</add>
 	<Array as="cycleAttributeValues">
 		<add value="#83027F"/>
 		<add value="#66B922"/>
@@ -39,9 +33,9 @@
 		</add>
 		<add as="task">
 			<Task label="Task">
-				<unresizableCell vertex="1">	
+				<mxCell vertex="1">	
 					<mxGeometry as="geometry" width="80" height="30"/>
-				</unresizableCell>
+				</mxCell>
 			</Task>
 		</add>
 		<add as="subprocess">
@@ -67,7 +61,7 @@
 		</add>
 		<add as="symbol">
 			<Symbol label="Symbol" description="" href="">
-				<mxCell vertex="1" style="symbol;image=images/symbols/event.png">		
+				<mxCell vertex="1" style="fontSize=9;shape=ellipse;resizable=0;" port="1">		
 					<mxGeometry as="geometry" width="32" height="32"/>
 				</mxCell>
 			</Symbol>

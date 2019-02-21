@@ -13,11 +13,7 @@
 	<mxDefaultToolbar as="toolbar">
 		<include name="config/wftoolbar-commons.xml"/>
 	</mxDefaultToolbar>
-	<add as="onInit"><![CDATA[
-		function ()
-		{
-			// Disables removing cells from parents
-			this.graph.graphHandler.setRemoveCellsFromParent(false);
-		}
-	]]></add>
+	<add as='onInit'>
+		VWQLEditorConfig.onInit
+	</add>
 </mxEditor>

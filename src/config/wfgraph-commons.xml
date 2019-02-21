@@ -1,67 +1,12 @@
 <mxGraph alternateEdgeStyle="verticalEdge" dropEnabled="1">
-	<add as="isAutoSizeCell"><![CDATA[
-		function(cell)
-		{
-			return this.isSwimlane(cell);
-		}
-	]]></add>
-	<add as="isSwimlane"><![CDATA[
-		function (cell)
-		{
-			return mxUtils.isNode(this.model.getValue(cell), 'swimlane');
-		}
-	]]></add>
-	<add as="isAllowOverlapParent"><![CDATA[
-		function(cell)
-		{
-			return !this.isSwimlane(cell.parent);
-		}
-	]]></add>
-	<add as="isValidRoot"><![CDATA[
-		function(cell)
-		{
-			return !this.isSwimlane(cell);
-		}
-	]]></add>
-	<add as="isCellFoldable"><![CDATA[
-		function(cell, collapse)
-		{
-			return !this.isSwimlane(cell) &&
-				cell.getChildCount() > 0;
-		}
-	]]></add>
-	<add as="getTooltipForCell"><![CDATA[
-		function(cell)
-		{
-			var href = cell.getAttribute('href');
-			href = (href != null && href.length > 0) ?
-				'<br>'+href : '';
-			var maxlen = 30;
-			var desc = cell.getAttribute('description');
-			if (desc == null || desc.length == 0)
-			{
-				desc = '';
-			}
-			else if (desc.length < maxlen)
-			{
-				desc = '<br>'+desc;
-			}
-			else
-			{
-				desc = '<br>'+desc.substring(0, maxlen)+'...';
-			}
-			return '<b>'+cell.getAttribute('label')+
-					'</b> ('+cell.getId()+')'+href+desc+
-					'<br>Edges: '+cell.getEdgeCount()+
-					'<br>Children: '+cell.getChildCount();
-		}
-	]]></add>
-	<add as="convertValueToString">
-		function(cell)
-		{
-			return cell.getAttribute('label');
-		}
-	</add>
+	<add as="isAutoSizeCell">VWQLGraphConfig.isAutoSizeCell</add>
+	<add as="isSwimlane">VWQLGraphConfig.isSwimlane</add>
+	<add as="isSameTamplate">VWQLGraphConfig.isSameTamplate</add>
+	<add as="isAllowOverlapParent">VWQLGraphConfig.isAllowOverlapParent</add>
+	<add as="isValidRoot">VWQLGraphConfig.isValidRoot</add>
+	<add as="isCellFoldable">VWQLGraphConfig.isCellFoldable</add>
+	<add as="getTooltipForCell">VWQLGraphConfig.getTooltipForCell</add>
+	<add as="convertValueToString">VWQLGraphConfig.convertValueToString</add>
 	<mxGraphModel as="model">
 		<add as="valueForCellChanged"><![CDATA[
 			function(cell, value)
