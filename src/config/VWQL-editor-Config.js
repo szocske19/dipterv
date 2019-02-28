@@ -39,15 +39,18 @@ class VWQLEditorConfig {
 
         var oisValidDropTarget = this.graph.isValidDropTarget;
         this.graph.isValidDropTarget = function(cell, cells, evt)
-        {
+        {            
             cells = cells != null ? cells : [];
+            if (cells.length > 0 && cells[0].getParent() !== null) {
+                return false;
+            }
             for (var i = 0; i < cells.length; i++)
             {
                 if (!VWQLEditorConfig.isProperParent(cells[i], cell)) {
                     return false;
                 }        
             }
-            return oisValidDropTarget.apply(this, arguments);
+            return oisValidDropTarget.apply(this, arguments);            
         };
 
         PortConfig.onInit(this);
@@ -58,7 +61,8 @@ class VWQLEditorConfig {
         var parentName = this.getCellName(parent);
         switch (cellName) {
             case "symbol":
-                return parentName === "swimlane";
+                //return parentName === "swimlane" || parentName === "task" || parentName === "process";
+                return true;
             default:
                 return false;
         }

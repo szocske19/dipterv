@@ -50,7 +50,7 @@ class PortConfig {
                             x = (x - pstate.x) / pstate.width;
                             y = (y - pstate.y) / pstate.height;
                             
-                            if (Math.abs(y - 0.5) <= Math.abs((x - 0.5) / 2))
+                            if (Math.abs(y - 0.5) <= Math.abs(x - 0.5))
                             {
                                 x = (x > 0.5) ? 1 : 0;
                                 y = Math.min(1, Math.max(0, y));
@@ -95,10 +95,17 @@ class PortConfig {
         };
 
         // Replaces move preview for relative children
-        mxEditor.graph.graphHandler.getDelta = function(me)
+        mxEditor.graph.graphHandler.getDelta = function(me, evtX, evtY, firstX, firstY)
         {
-            var point = mxUtils.convertPoint(this.graph.container, me.getX(), me.getY());
-            var delta = new mxPoint(point.x - this.first.x, point.y - this.first.y);
+            var point;
+            var delta;
+            if (evtX !== undefined && evtY !== undefined && firstX !== undefined && firstY !== undefined) {
+                point = mxUtils.convertPoint(this.graph.container, evtX, evtY);              
+                delta = new mxPoint(point.x - firstX, point.y - firstY);
+            } else {
+                point = mxUtils.convertPoint(this.graph.container, me.getX(), me.getY());
+                delta = new mxPoint(point.x - this.first.x, point.y - this.first.y);
+            }
             
             if (this.cells != null && this.cells.length > 0 && this.cells[0] != null)
             {
