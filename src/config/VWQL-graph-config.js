@@ -4,7 +4,7 @@ class VWQLGraphConfig {
     }
 
     static isSwimlane(cell) {
-        return this.isSameTamplate(cell, 'swimlane');
+        return cell !== null && cell.isSwimlane !== undefined && cell.isSwimlane === 1;
     }
 
     static isSameTamplate(cell, template) {
