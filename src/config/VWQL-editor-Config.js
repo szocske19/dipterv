@@ -3,6 +3,8 @@ class VWQLEditorConfig {
         // Disables removing cells from parents
         this.graph.graphHandler.setRemoveCellsFromParent(false);
         this.showTasks();
+        var graph = this["graph"];
+        var model = graph.getModel();
 
         this.graph.graphHandler.moveCells = function(cells, dx, dy, clone, target, evt) {
             if (clone)
@@ -37,7 +39,6 @@ class VWQLEditorConfig {
             }
         };
 
-        var oisValidDropTarget = this.graph.isValidDropTarget;
         this.graph.isValidDropTarget = function(cell, cells, evt)
         {            
             cells = cells != null ? cells : [];
@@ -50,8 +51,81 @@ class VWQLEditorConfig {
                     return false;
                 }        
             }
-            return oisValidDropTarget.apply(this, arguments);            
+
+            return cell != null && ((this.isSplitEnabled() 
+                && this.isSplitTarget(cell, cells, evt)) 
+                || !this.model.isEdge(cell));          
         };
+
+        // Adds new method for identifying a pool
+        this.graph.isPool = function(cell)
+        {            
+            var parent = model.getParent(cell);
+        
+            return parent != null && model.getParent(parent) == model.getRoot();
+        };
+
+        // Applies size changes to siblings and parents
+        new mxSwimlaneManager(graph);
+
+        // Creates a stack depending on the orientation of the swimlane
+        var layout = new mxStackLayout(graph, false);
+        
+        // Makes sure all children fit into the parent swimlane
+        layout.resizeParent = true;
+                    
+        // Applies the size to children if parent size changes
+        layout.fill = true;
+
+        layout.horizontal = true;
+
+        // Only update the size of swimlanes
+        layout.isVertexIgnored = function(vertex)
+        {
+            var cellName = VWQLEditorConfig.getCellName(vertex);
+            return !VWQLEditorConfig.isInTheList(["patternbody"], cellName);
+            // return !graph.isSameTamplate(vertex, "patternbody");
+        }
+        
+        // Keeps the lanes and pools stacked
+        var layoutMgr = new mxLayoutManager(graph);
+
+        layoutMgr.getLayout = function(cell)
+        {
+            // if (!model.isEdge(cell) && graph.getModel().getChildCount(cell) > 0 &&
+            //     (model.getParent(cell) == model.getRoot() || graph.isPool(cell)))
+            // {
+                // layout.fill = graph.isPool(cell);
+                // layout.fill = true;
+                
+                return layout;
+            // }
+            
+            // return null;
+        };
+
+        // Keeps widths on collapse/expand					
+        var foldingHandler = function(sender, evt)
+        {
+            var cells = evt.getProperty('cells');
+            
+            for (var i = 0; i < cells.length; i++)
+            {
+                var geo = graph.model.getGeometry(cells[i]);
+
+                if (geo.alternateBounds != null)
+                {
+                    geo.width = geo.alternateBounds.width;
+                }
+            }
+        };
+
+        graph.addListener(mxEvent.FOLD_CELLS, foldingHandler);
+
+        
+        var style = graph.getStylesheet().getDefaultVertexStyle();
+        style[mxConstants.STYLE_SHAPE] = mxConstants.SHAPE_SWIMLANE;
+        graph.getStylesheet().putCellStyle('pattern', style);
 
         PortConfig.onInit(this);
     }
@@ -61,11 +135,32 @@ class VWQLEditorConfig {
         var parentName = this.getCellName(parent);
         switch (cellName) {
             case "symbol":
-                //return parentName === "swimlane" || parentName === "task" || parentName === "process";
-                return true;
+                return this.isInTheList(["pattern"], parentName);
+            
+            case "pattern":
+                return this.isInTheList(["pattern"], parentName);
+            case "parameter":
+                return this.isInTheList(["pattern"], parentName);
+            case "patternbody":
+                return this.isInTheList(["pattern"], parentName);
+            
+
+            case "pathexpression":
+                return this.isInTheList(["patternbody"], parentName);
+            case "compare":
+                return this.isInTheList(["patternbody"], parentName);
+            case "check":
+                return this.isInTheList(["patternbody"], parentName);
+            case "patterncomposition":
+                return this.isInTheList(["patternbody"], parentName);
+
             default:
-                return false;
+                return true;
         }
+    }
+
+    static isInTheList(array, str) {
+        return array.indexOf(str) >= 0;
     }
 
     static getCellName(cell) {
