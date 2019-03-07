@@ -12,6 +12,63 @@
 		<add value="#4679B6"/>
 	</Array>
 	<Array as="templates">
+		<add as="pattern">
+			<Pattern label="Pattern" customAttribute="text value">
+				<mxCell vertex="1" style="swimlane" connectable="0" isSwimlane="1">
+					<mxGeometry as="geometry" width="220" height="480"/>
+				</mxCell>
+			</Pattern>
+		</add>
+		<add as="parameter">
+			<Parameter label="Parameter" description="" href="">
+				<mxCell vertex="1" style="fontSize=9;shape=ellipse;resizable=0;" port="1">		
+					<mxGeometry as="geometry" width="32" height="32"/>
+				</mxCell>
+			</Parameter>
+		</add>
+		<add as="patternBody">
+			<PatternBody label="PatternBody" description="" href="">
+				<mxCell vertex="1" style="fontSize=9;" port="2">		
+					<mxGeometry as="geometry" width="100" height="60"/>
+				</mxCell>
+			</PatternBody>
+		</add>		
+		<add as="pathexpression">
+			<PathExpression label="PathExpression">
+				<mxCell vertex="1" style="pathexpression">		
+					<mxGeometry as="geometry" width="60" height="50"/>
+				</mxCell>
+			</PathExpression>
+		</add>
+		<add as="compare">
+			<Compare label="Compare">
+				<mxCell vertex="1" style="compare">		
+					<mxGeometry as="geometry" width="60" height="50"/>
+				</mxCell>
+			</Compare>
+		</add>
+		<add as="check">
+			<Check label="Check">
+				<mxCell vertex="1" style="check">		
+					<mxGeometry as="geometry" width="60" height="50"/>
+				</mxCell>
+			</Check>
+		</add>
+		<add as="patterncomposition">
+			<PatternComposition label="PatternComposition">
+				<mxCell vertex="1" style="patterncomposition">		
+					<mxGeometry as="geometry" width="60" height="50"/>
+				</mxCell>
+			</PatternComposition>
+		</add>
+
+		<add as="symbol">
+			<Symbol label="Symbol" description="" href="">
+				<mxCell vertex="1" style="fontSize=9;shape=ellipse;resizable=0;" port="1">		
+					<mxGeometry as="geometry" width="32" height="32"/>
+				</mxCell>
+			</Symbol>
+		</add>
 		<add as="group">
 			<Group label="" description="">
 				<mxCell vertex="1" style="group" connectable="0"/>
@@ -23,14 +80,7 @@
 					<mxGeometry as="geometry" isRelative="1"/>
 				</mxCell>
 			</Edge>
-		</add>
-		<add as="swimlane">
-			<Swimlane label="Pattern" customAttribute="text value">
-				<mxCell vertex="1" style="swimlane" connectable="0">
-					<mxGeometry as="geometry" width="220" height="480"/>
-				</mxCell>
-			</Swimlane>
-		</add>
+		</add>		
 		<add as="task">
 			<Task label="Task">
 				<mxCell vertex="1">	
@@ -45,27 +95,13 @@
 				</mxCell>
 			</Subprocess>
 		</add>
-		<add as="shape">
-			<Shape label="Element">
-				<mxCell vertex="1" style="ellipse">		
-					<mxGeometry as="geometry" width="60" height="50"/>
-				</mxCell>
-			</Shape>
-		</add>
-		<add as="hline">
+		<!-- <add as="hline">
 			<Shape label="">
 				<mxCell vertex="1" style="ellipse">		
 					<mxGeometry as="geometry" width="60" height="10"/>
 				</mxCell>
 			</Shape>
-		</add>
-		<add as="symbol">
-			<Symbol label="Symbol" description="" href="">
-				<mxCell vertex="1" style="fontSize=9;shape=ellipse;resizable=0;" port="1">		
-					<mxGeometry as="geometry" width="32" height="32"/>
-				</mxCell>
-			</Symbol>
-		</add>
+		</add> -->		
 	</Array>
 	<add as="createTasks"><![CDATA[
 		function (div)

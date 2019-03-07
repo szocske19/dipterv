@@ -33,14 +33,20 @@
 	<add as="paste" action="paste" icon="images/paste.gif"/>
 	<add as="delete" action="delete" icon="images/delete.gif"/>
 	<br/><hr/>
-	<!-- <add as="group" action="group" icon="images/group.gif"/>R
+	<add as="group" action="group" icon="images/group.gif"/>
 	<add as="ungroup" action="ungroup" icon="images/ungroup.gif"/>
-	<br/><hr/>	 -->
+	<br/><hr/>
 	<separator name = "pattern"/>
-	<add as="Pattern" template="swimlane" icon="images/swimlane.gif"/>
-	<add as="Parameter" template="symbol" icon="images/rectangle.gif"/>
-	<add as="Pattern Body" template="symbol" icon="images/rounded.gif"/>
-	<separator name = "Constraints"/>
+	<add as="Pattern" template="pattern" icon="images/swimlane.gif"/>
+	<add as="Parameter" template="parameter" icon="images/rectangle.gif"/>
+	<add as="Pattern Body" template="patternBody" icon="images/rounded.gif"/>
+	<separator name = "constraints"/>
+	<br/><hr/>
+	<add as="Path Expression" template="pathexpression" icon="images/symbols/small_event.gif"/>
+	<add as="Compare" template="compare" icon="images/symbols/small_event_intermediate.gif"/>
+	<add as="Check" template="check" icon="images/symbols/small_event_end.gif"/>
+	<add as="Pattern Composition" template="patterncomposition"  icon="images/symbols/small_timer.gif"/>
+	<separator name = "tools"/>
 	<br/><hr/>
 	<add as="Event" template="hline" style="symbol;image=images/symbols/event.png" icon="images/symbols/small_event.gif"/>
 	<add as="Event (Intermediate)" template="task" style="symbol;image=images/symbols/event_intermediate.png" icon="images/symbols/small_event_intermediate.gif"/>

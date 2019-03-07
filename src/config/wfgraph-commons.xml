@@ -73,7 +73,7 @@
 			<add as="startSize" value="23"/>
 			<add as="verticalAlign" value="top"/>
 			<add as="fontColor" value="white"/>
-			<add as="labelBackgroundColor" value="none"/>
+			<add as="labelBackgroundColor" value="green"/>
 		</add>
 		<add as="group">
 			<add as="shape" value="rectangle"/>
@@ -90,6 +90,26 @@
 			<add as="shape" value="ellipse"/>
 			<add as="perimeter" value="ellipsePerimeter"/>
 		</add>
+		<add as="pathexpression">
+			<add as="shape" value="ellipse"/>
+			<add as="perimeter" value="ellipsePerimeter"/>
+			<add as="fillColor" value="green"/>
+		</add>
+		<add as="compare">
+			<add as="shape" value="ellipse"/>
+			<add as="perimeter" value="ellipsePerimeter"/>
+			<add as="fillColor" value="red"/>
+		</add>
+		<add as="check">
+			<add as="shape" value="ellipse"/>
+			<add as="perimeter" value="ellipsePerimeter"/>
+			<add as="fillColor" value="blue"/>
+		</add>
+		<add as="patterncomposition">
+			<add as="shape" value="ellipse"/>
+			<add as="perimeter" value="ellipsePerimeter"/>			
+			<add as="fillColor" value="yellow"/>
+		</add>
 		<add as="rhombus">
 			<add as="shape" value="rhombus"/>
 			<add as="perimeter" value="rhombusPerimeter"/>
@@ -105,6 +125,15 @@
 			<add as="align" value="center"/>
 			<add as="verticalAlign" value="top"/>
 			<add as="verticalLabelPosition" value="bottom"/>
+		</add>
+		<add as="pattern">
+			<add as="shape" value="swimlane"/>
+			<add as="rounded" value="1"/>
+			<add as="fontSize" value="12"/>
+			<add as="startSize" value="23"/>
+			<add as="verticalAlign" value="top"/>
+			<add as="fontColor" value="white"/>
+			<add as="labelBackgroundColor" value="green"/>
 		</add>
 	</mxStylesheet>
 </mxGraph>
