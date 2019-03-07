@@ -50,15 +50,23 @@ class PortConfig {
                             x = (x - pstate.x) / pstate.width;
                             y = (y - pstate.y) / pstate.height;
                             
-                            if (Math.abs(y - 0.5) <= Math.abs(x - 0.5))
-                            {
-                                x = (x > 0.5) ? 1 : 0;
-                                y = Math.min(1, Math.max(0, y));
-                            }
-                            else
-                            {
-                                x = Math.min(1, Math.max(0, x));
-                                y = (y > 0.5) ? 1 : 0;
+                            if (state.cell.port === 1) {
+                                if (Math.abs(y - 0.5) <= Math.abs(x - 0.5))
+                                {
+                                    x = (x > 0.5) ? 1 : 0;
+                                    y = Math.min(1, Math.max(0, y));
+                                }
+                                else
+                                {
+                                    x = Math.min(1, Math.max(0, x));
+                                    y = (y > 0.5) ? 1 : 0;
+                                }
+                            } else if (state.cell.port === 2) {
+                                var relativeOffsetX = Math.abs(state.cell.geometry.offset.x) / pstate.width;
+                                var relativeOffsetY = Math.abs(state.cell.geometry.offset.y) / pstate.height;
+
+                                x = Math.min(1 - relativeOffsetX, Math.max(0 + relativeOffsetX, x));
+                                y = Math.min(1 - relativeOffsetY, Math.max(0 + relativeOffsetY, y));
                             }
                             
                             return new mxPoint(x, y);
@@ -75,7 +83,7 @@ class PortConfig {
         {
             var rel = getRelativePosition(mxEditor.graph.view.getState(cell), dx * mxEditor.graph.view.scale, dy * mxEditor.graph.view.scale);
             
-            if (rel != null)
+            if (rel !== null)
             {
                 var geo = this.model.getGeometry(cell);
                 

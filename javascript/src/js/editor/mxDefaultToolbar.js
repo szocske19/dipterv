@@ -379,12 +379,10 @@ mxDefaultToolbar.prototype.drop = function(vertex, evt, target)
 		
 		this.insert(vertex, evt, target);
 		
-		if(vertex.port == 1){
+		if(vertex.port === 1){
 			model.beginUpdate();
 			vertex.geometry.relative = true;
 			vertex.geometry.offset = new mxPoint(-vertex.geometry.width/2, -vertex.geometry.height/2);
-			// vertex.geometry.x = 0.5
-			// vertex.geometry.y = 0.5			
 			model.endUpdate();
 
 			graph.translateCell(vertex, 0, 0)
@@ -413,27 +411,10 @@ mxDefaultToolbar.prototype.insert = function(vertex, evt, target)
 	var graph = this.editor.graph;
 	
 	if (graph.canImportCell(vertex))
-	{		
-		var x = 0;		
-		var y = 0;
-		var delta;
-		if(vertex.port == 1){
-			// var delta = graph.graphHandler.getDelta(evt, mxEvent.getClientX(evt), mxEvent.getClientY(evt), target.geometry.x, target.geometry.y);
-			delta = new mxPoint(mxEvent.getClientX(evt) - target.geometry.x, mxEvent.getClientY(evt) - target.geometry.y);
-			x = delta.x;			
-			y = delta.y;
-
-		} else {
-			x = mxEvent.getClientX(evt);
-			y = mxEvent.getClientY(evt);
-		}
-
-		var pt;
-		if(target === null){
-			pt = mxUtils.convertPoint(graph.container, x, y);
-		} else {
-			pt = new mxPoint(mxEvent.getClientX(evt), mxEvent.getClientY(evt));
-		}
+	{	
+		var x = mxEvent.getClientX(evt);
+		var y = mxEvent.getClientY(evt);
+		var pt = mxUtils.convertPoint(graph.container, x, y);
 		
 		// Splits the target edge or inserts into target group
 		if (graph.isSplitEnabled() &&
