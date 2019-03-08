@@ -19,6 +19,7 @@
         "no-shadow": "off",
         "func-names": "off",
         "no-unused-vars": "off",
-        "quotes": "off"
+        "quotes": "off",
+        "no-plusplus": "off"
     }
 }
