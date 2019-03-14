@@ -92,8 +92,9 @@ class PortConfig {
                     geo = geo.clone();
                     geo.x = rel.x;
                     geo.y = rel.y;
-                    
-                    this.model.setGeometry(cell, geo);
+
+                    cell.geometry = geo
+                    // this.model.setGeometry(cell, geo);
                 }
             }
             else

@@ -382,10 +382,10 @@ mxDefaultToolbar.prototype.drop = function(vertex, evt, target)
 		if(vertex.port === 1){
 			model.beginUpdate();
 			vertex.geometry.relative = true;
-			vertex.geometry.offset = new mxPoint(-vertex.geometry.width/2, -vertex.geometry.height/2);
+			vertex.geometry.offset = new mxPoint(-vertex.geometry.width/2, -vertex.geometry.height/2);			
+			graph.translateCell(vertex, 0, 0);
+			vertex.value.attributes.name.value = "uniqueName";
 			model.endUpdate();
-
-			graph.translateCell(vertex, 0, 0)
 		}
 	}
 	else

@@ -46,7 +46,24 @@ class VWQLGraphConfig {
     }
 
     static convertValueToString(cell) {
-        return cell.getAttribute('label');
+        return cell.getAttribute('name');
+    }
+
+    static valueForCellChanged(cell, value) {
+        var previous = null;
+        
+        if (isNaN(value.nodeType))
+        {
+            previous = cell.getAttribute('name');
+            cell.setAttribute('name', value);
+        }
+        else
+        {
+            previous = cell.value;
+            cell.value = value;
+        }
+        
+        return previous;
     }
 
 }

@@ -13,49 +13,49 @@
 	</Array>
 	<Array as="templates">
 		<add as="pattern">
-			<Pattern label="Pattern" customAttribute="text value">
+			<Pattern name="Pattern">
 				<mxCell vertex="1" style="swimlane" connectable="0" isSwimlane="1">
 					<mxGeometry as="geometry" width="220" height="480"/>
 				</mxCell>
 			</Pattern>
 		</add>
 		<add as="parameter">
-			<Parameter label="Parameter" description="" href="">
+			<Parameter name="Parameter" description="" href="">
 				<mxCell vertex="1" style="fontSize=9;shape=ellipse;resizable=0;" port="1">		
 					<mxGeometry as="geometry" width="32" height="32"/>
 				</mxCell>
 			</Parameter>
 		</add>
 		<add as="patternBody">
-			<PatternBody label="PatternBody" description="" href="">
-				<mxCell vertex="1" style="fontSize=9;" port="2">		
-					<mxGeometry as="geometry" width="100" height="60"/>
+			<PatternBody name="PatternBody" description="" href="">
+				<mxCell vertex="1" style="fontSize=9;" connectable="0" port="2">		
+					<mxGeometry as="geometry" width="200" height="60"/>
 				</mxCell>
 			</PatternBody>
 		</add>		
 		<add as="pathexpression">
-			<PathExpression label="PathExpression">
+			<PathExpression name="PathExpression">
 				<mxCell vertex="1" style="pathexpression">		
 					<mxGeometry as="geometry" width="60" height="50"/>
 				</mxCell>
 			</PathExpression>
 		</add>
 		<add as="compare">
-			<Compare label="Compare">
+			<Compare name="Compare">
 				<mxCell vertex="1" style="compare">		
 					<mxGeometry as="geometry" width="60" height="50"/>
 				</mxCell>
 			</Compare>
 		</add>
 		<add as="check">
-			<Check label="Check">
+			<Check name="Check">
 				<mxCell vertex="1" style="check">		
 					<mxGeometry as="geometry" width="60" height="50"/>
 				</mxCell>
 			</Check>
 		</add>
 		<add as="patterncomposition">
-			<PatternComposition label="PatternComposition">
+			<PatternComposition name="PatternComposition">
 				<mxCell vertex="1" style="patterncomposition">		
 					<mxGeometry as="geometry" width="60" height="50"/>
 				</mxCell>
@@ -63,33 +63,33 @@
 		</add>
 
 		<add as="symbol">
-			<Symbol label="Symbol" description="" href="">
+			<Symbol name="Symbol" description="" href="">
 				<mxCell vertex="1" style="fontSize=9;shape=ellipse;resizable=0;" port="1">		
 					<mxGeometry as="geometry" width="32" height="32"/>
 				</mxCell>
 			</Symbol>
 		</add>
 		<add as="group">
-			<Group label="" description="">
+			<Group name="" description="">
 				<mxCell vertex="1" style="group" connectable="0"/>
 			</Group>
 		</add>
 		<add as="edge">
-			<Edge label="" description="">
+			<Edge name="" description="">
 				<mxCell edge="1">
 					<mxGeometry as="geometry" isRelative="1"/>
 				</mxCell>
 			</Edge>
 		</add>		
 		<add as="task">
-			<Task label="Task">
+			<Task name="Task">
 				<mxCell vertex="1">	
 					<mxGeometry as="geometry" width="80" height="30"/>
 				</mxCell>
 			</Task>
 		</add>
 		<add as="subprocess">
-			<Subprocess label="Subprocess">
+			<Subprocess name="Subprocess">
 				<mxCell vertex="1" style="rounded">		
 					<mxGeometry as="geometry" width="80" height="30"/>
 				</mxCell>

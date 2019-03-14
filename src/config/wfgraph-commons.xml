@@ -8,25 +8,7 @@
 	<add as="getTooltipForCell">VWQLGraphConfig.getTooltipForCell</add>
 	<add as="convertValueToString">VWQLGraphConfig.convertValueToString</add>
 	<mxGraphModel as="model">
-		<add as="valueForCellChanged"><![CDATA[
-			function(cell, value)
-			{
-				var previous = null;
-				
-				if (isNaN(value.nodeType))
-				{
-					previous = cell.getAttribute('label');
-					cell.setAttribute('label', value);
-				}
-				else
-				{
-					previous = cell.value;
-					cell.value = value;
-				}
-				
-				return previous;
-			}
-		]]></add>
+		<add as="valueForCellChanged">VWQLGraphConfig.valueForCellChanged</add>
 		<root>
 			<Workflow label="MyWorkflow" description="" href="" id="0"/>
 			<Layer label="Default Layer">

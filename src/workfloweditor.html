@@ -116,7 +116,7 @@
 				var button2 = mxUtils.button('generater vql', function()
 				{
 					var vqlGenerator = new VqlGenerator();
-					var output = vqlGenerator.generate(graph.getModel());
+					var output = vqlGenerator.generate(graph);
 					document.getElementById('to2').innerHTML = output;
 				});
 				
