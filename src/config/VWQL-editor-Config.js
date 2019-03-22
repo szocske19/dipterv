@@ -128,6 +128,28 @@ class VWQLEditorConfig {
         graph.getStylesheet().putCellStyle('pattern', style);
 
         PortConfig.onInit(this);
+
+        graph.isCellEditable = function(cell)
+        {
+            return !this.model.isEdge(cell);
+        };
+
+        var oldIsCellMovable = graph.isCellMovable;
+        graph.isCellMovable = function(cell)
+        {
+            return oldIsCellMovable.apply(this, arguments) 
+                && !this.model.isEdge(cell);
+        };
+
+        var oldValidateConnection = graph.connectionHandler.validateConnection;
+        graph.connectionHandler.validateConnection = function(source, target)
+        {
+            // TODO make validation
+            // return '';
+            return oldValidateConnection.apply(this, arguments);
+        };
+
+        graph.setAllowDanglingEdges(false);
     }
 
     static isProperParent(cell, parent) {
