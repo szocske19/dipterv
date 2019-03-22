@@ -1,58 +1,81 @@
-class VqlGenerator { 
-    constructor() { 
-        this.INDENTATION_START = '&emsp;';
+class VqlGenerator {    
+    static generate(graph) {
+        this.graph = graph; 
+        var root = graph.getModel().getRoot();
+        var firstLayer = root.children[0];    
+        var element = `package ${root.value.getAttribute("packageName")}`;
+        var result = `${this.wrapperWithSpan("package", root.id, element)} <br><br>`;
+
+        result = result.concat(this.packageImportCode(root));
+
+        var patterns = VwqlUtils.getElements(graph, firstLayer, "pattern");
+
+        for (var i = 0; i < patterns.length; i++) {
+            result = result.concat(this.graphPatternCode(firstLayer.children[i])); 
+            result = result.concat("<br>");            
+        }
+         
+        return result; 
     }
     
-    generate(graph) { 
-        var root = graph.getModel().getRoot().children[0];
-        this.graph = graph;
-        var element = `package ${root.value.name}`;
-        var result = `${this.wrapperWithSpan("package", root.id, element)} <br><br>`;
-        if (root.children) {
-            for (var i = 0; i < root.children.length; i++) {
-                if (this.graph.isSameTamplate(root.children[i], "pattern")) {
-                    result = result.concat(this.graphPatternCode(root.children[i])); 
-                    result = result.concat("<br>");
-                } 
-            }
-         }
-        return result; 
-    }    
+    static packageImportCode(root) {
+        var result = '';
+        if (root.value.children[0] && root.value.children[0].getAttribute("as") === "emfPackages") {            
+            for (var i = 0; i < root.value.children[0].children.length; i++) {
+                var emfPackage = root.value.children[0].children[i];
+                var element = `import ${emfPackage.getAttribute("value")}`;    
+                result = result.concat(this.wrapperWithSpan("package", root.id, element));
+                result = result.concat("<br>");                
+            }            
+        }
 
-    graphPatternCode(graphPattern) {
-        var name = graphPattern.value.getAttribute("label");
+        result = result.concat("<br>");  
+        return result;
+    }
+
+    static graphPatternCode(graphPattern) {
+        var name = graphPattern.value.getAttribute("name");
 
         var bodySeperator = `} or { <br>`;   
         
-        var parameterList = `asd, dsa`;
+        var parameterList = this.parameterListCode(graphPattern);
 
         var bodies = [];
-        if (graphPattern.children) {
-            for (var i = 0; i < graphPattern.children.length; i++) {
-                if (this.graph.isSameTamplate(graphPattern.children[i], "patternbody")) {
-                    bodies.push(this.patternBodyCode(graphPattern.children[i]));
-                }
-            }
-        }
+        var patternbodies = VwqlUtils.getElements(this.graph, graphPattern, "patternbody");
+        for (var i = 0; i < patternbodies.length; i++) {
+            bodies.push(this.patternBodyCode(patternbodies[i]));            
+        }        
 
         var element = `pattern ${name} ( ${parameterList} ){<br>  ${bodies.join(bodySeperator)}}`;
 
         return this.wrapperWithSpan("pattern", graphPattern.id, element);
     }
 
-    patternBodyCode(body) {
-        var name = body.value.getAttribute("label");   
+    static patternBodyCode(body) {
+        var name = body.value.getAttribute("name");   
 
-        var element = `valami`;
+        var element = `<<<<valami>>>>`;
 
-        return `${this.INDENTATION_START + this.wrapperWithSpan("pattern", body.id, element)} <br>`;
+        return `${this.INDENTATION_START + this.wrapperWithSpan("patternbody", body.id, element)} <br>`;
     }
 
-    packageImportCode(ePackage) {
-        return ePackage;
+    static parameterListCode(graphPattern) {
+        var parametes = [];
+
+        var parameters = VwqlUtils.getElements(this.graph, graphPattern, "parameter");
+        for (var i = 0; i < parameters.length; i++) {
+            var type = parameters[i].value.getAttribute("type");
+            var name = parameters[i].value.getAttribute("name");        
+            var element = `${type}: ${name}`;
+            parametes.push(this.wrapperWithSpan("parameter", parameters[i].id, element));                
+        }
+
+        return parametes.join(", ");
     }
 
-    wrapperWithSpan(cls, id, element){
-        return '<span class="' + cls + '" refId="' + id + '">' + element + '</span>'
+    static wrapperWithSpan(cls, id, element) {
+        return `<span class="${cls}" refId="${id}">${element}</span>`;
     }
 }
+
+VqlGenerator.INDENTATION_START = '&emsp;';

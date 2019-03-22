@@ -36,6 +36,7 @@
 	<script type="text/javascript" src="config/VWQL-graph-config.js"></script>
 	<script type="text/javascript" src="config/PortConfig.js"></script>
 	<script type="text/javascript" src="vqlGenerator/VqlGenerator.js"></script>
+	<script type="text/javascript" src="vwql/VwqlUtils.js"></script>
 	<script type="text/javascript">
 		mxGraph.prototype.htmlLabels = true;
 	
@@ -115,8 +116,7 @@
 
 				var button2 = mxUtils.button('generater vql', function()
 				{
-					var vqlGenerator = new VqlGenerator();
-					var output = vqlGenerator.generate(graph);
+					var output = VqlGenerator.generate(graph);
 					document.getElementById('to2').innerHTML = output;
 				});
 				
