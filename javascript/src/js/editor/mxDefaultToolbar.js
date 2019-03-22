@@ -378,21 +378,48 @@ mxDefaultToolbar.prototype.drop = function(vertex, evt, target)
 		}
 		
 		this.insert(vertex, evt, target);
-		
+
+		model.beginUpdate();
+		var usedNames = [];
+
+		if(target !== null){
+			if(target.children !== null){
+				usedNames = target.children.map(function(item) {
+					return item.getAttribute("name");
+				});
+			}
+		} else {
+			target = graph.getDefaultParent();
+			if(target.children !== null){
+				usedNames = target.children.map(function(item) {
+					return item.getAttribute("name");
+				});
+			}
+		}
+		vertex.value.attributes.name.value = graph.getFirstUnusedName(vertex.value.attributes.name.value, usedNames);
+
 		if(vertex.port === 1){
-			model.beginUpdate();
+			
 			vertex.geometry.relative = true;
 			vertex.geometry.offset = new mxPoint(-vertex.geometry.width/2, -vertex.geometry.height/2);			
 			graph.translateCell(vertex, 0, 0);
-			vertex.value.attributes.name.value = "uniqueName";
-			model.endUpdate();
+			
 		}
+
+		var edit = new mxCellAttributeChange(
+			vertex, "name",
+			vertex.value.attributes.name.value);
+		model.execute(edit);
+		
+		model.endUpdate();
 	}
 	else
 	{
 		this.connect(vertex, evt, target);
 	}
 };
+
+
 
 /**
  * Function: insert

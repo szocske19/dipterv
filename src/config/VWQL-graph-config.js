@@ -66,4 +66,14 @@ class VWQLGraphConfig {
         return previous;
     }
 
+    static getFirstUnusedName(name, list) {
+        var i = 0;
+        var occupied = true;
+        while (occupied) {
+            occupied = list.indexOf(name + ++i) > -1;
+        }
+    
+        var nameWithIndex = name + i;
+        return nameWithIndex;
+    }
 }
