@@ -7,11 +7,19 @@
 	<add as="isCellFoldable">VWQLGraphConfig.isCellFoldable</add>
 	<add as="getTooltipForCell">VWQLGraphConfig.getTooltipForCell</add>
 	<add as="convertValueToString">VWQLGraphConfig.convertValueToString</add>
+	<add as="getFirstUnusedName">VWQLGraphConfig.getFirstUnusedName</add>	
 	<mxGraphModel as="model">
 		<add as="valueForCellChanged">VWQLGraphConfig.valueForCellChanged</add>
 		<root>
-			<Workflow label="MyWorkflow" description="" href="" id="0"/>
-			<Layer label="Default Layer">
+			<VWQL name="First VWQL" packageName="my.first.vwql" id="0">
+			<Array as="emfPackages">
+				<add value="org.eclipse.emf.ecore.EClass"/>
+				<add value="org.eclipse.emf.ecore.EPackage"/>
+				<add value="a"/>
+			</Array>
+		</VWQL>
+			<Layer name="Default Layer">
+			
 				<mxCell parent="0"/>
 			</Layer>
 		</root>

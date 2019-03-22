@@ -20,7 +20,7 @@
 			</Pattern>
 		</add>
 		<add as="parameter">
-			<Parameter name="Parameter" description="" href="">
+			<Parameter name="Parameter" type="">
 				<mxCell vertex="1" style="fontSize=9;shape=ellipse;resizable=0;" port="1">		
 					<mxGeometry as="geometry" width="32" height="32"/>
 				</mxCell>
@@ -101,7 +101,14 @@
 					<mxGeometry as="geometry" width="60" height="10"/>
 				</mxCell>
 			</Shape>
-		</add> -->		
+		</add> -->
+		<add as="variable">
+			<Variable name="Variable">
+				<mxCell vertex="1" style="rounded">		
+					<mxGeometry as="geometry" width="80" height="30"/>
+				</mxCell>
+			</Variable>
+		</add>		
 	</Array>
 	<add as="createTasks"><![CDATA[
 		function (div)

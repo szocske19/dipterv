@@ -46,9 +46,10 @@
 	<add as="Compare" template="compare" icon="images/symbols/small_event_intermediate.gif"/>
 	<add as="Check" template="check" icon="images/symbols/small_event_end.gif"/>
 	<add as="Pattern Composition" template="patterncomposition"  icon="images/symbols/small_timer.gif"/>
-	<separator name = "tools"/>
+	<separator name = "Expressions"/>
 	<br/><hr/>
-	<add as="Event" template="hline" style="symbol;image=images/symbols/event.png" icon="images/symbols/small_event.gif"/>
+	<add as="Variable" template="variable" icon="images/symbols/small_event.gif"/>
+	<!-- <add as="Event" template="hline" style="symbol;image=images/symbols/event.png" icon="images/symbols/small_event.gif"/>
 	<add as="Event (Intermediate)" template="task" style="symbol;image=images/symbols/event_intermediate.png" icon="images/symbols/small_event_intermediate.gif"/>
 	<add as="Event (End)" template="shape" style="symbol;image=images/symbols/event_end.png" icon="images/symbols/small_event_end.gif"/>
 	<add as="Timer" template="shape" style="symbol;image=images/symbols/timer.png" icon="images/symbols/small_timer.gif"/>
@@ -64,7 +65,7 @@
 	<add as="Cancel (Intermediate)" template="symbol" style="symbol;image=images/symbols/cancel_intermediate.png" icon="images/symbols/small_cancel_intermediate.gif"/>
 	<add as="Fork" template="symbol" style="symbol;image=images/symbols/fork.png" icon="images/symbols/small_fork.gif"/>
 	<add as="Merge" template="symbol" style="symbol;image=images/symbols/merge.png" icon="images/symbols/small_merge.gif"/>
-	<add as="Inclusive" template="symbol" style="symbol;image=images/symbols/inclusive.png" icon="images/symbols/small_inclusive.gif"/>
+	<add as="Inclusive" template="symbol" style="symbol;image=images/symbols/inclusive.png" icon="images/symbols/small_inclusive.gif"/> -->
 	<br/><hr/>
 	<add as="fit" action="fit" icon="images/zoom.gif"/>
 	<add as="zoomIn" action="zoomIn" icon="images/zoomin.gif"/>
