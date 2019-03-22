@@ -200,3 +200,102 @@ mxForm.prototype.addField = function(name, input)
 	
 	return input;
 };
+
+mxForm.prototype.addMultiCombo = function(name, array, selectedArray){
+
+	var div = document.createElement("div");
+	var table = document.createElement("table");
+
+	if(selectedArray != null) {
+		for (var i = 0; i < selectedArray.length; i++) {
+			if (array.indexOf(selectedArray[i]) === -1)  {
+				array.push(selectedArray[i]);
+			}
+		}
+	}
+
+	if(selectedArray != null) {
+		for (var i = 0; i < selectedArray.length; i++) {
+			insRow(table, array, name, selectedArray[i]);
+		}
+		if(selectedArray.length < 2) {
+			table.firstElementChild.firstElementChild.lastElementChild.firstElementChild.disabled = true;
+		}
+	}
+	
+	var button = document.createElement("button");
+	button.innerHTML = "Add";
+	button.onclick = function() {
+		insRow(table, array, name, null);
+	}	
+
+	div.appendChild(table);
+	div.appendChild(button)
+
+	return this.addField(name, div);
+}
+
+function deleteRow(table, button) {
+	var row = button.parentNode.parentNode;			
+	table.deleteRow(row.rowIndex);			
+	
+	var filas = table.rows.length;
+	// if(filas === 1) {
+	// 	table.firstElementChild.firstElementChild.lastElementChild.firstElementChild.disabled = true;
+	// }
+}
+
+function insRow(table, array, name, selected) {
+	var filas = table.rows.length;
+	var row = table.insertRow(filas);
+	var cell1 = row.insertCell(0);
+	var cell2 = row.insertCell(1);
+	
+	createSelect(cell1, array, name, selected);
+	
+	var button = document.createElement('button');
+	button.innerHTML = "Remove";
+	button.onclick = function() {deleteRow(table ,button);}
+	cell2.appendChild(button);
+	
+	// table.firstElementChild.firstElementChild.lastElementChild.firstElementChild.disabled = false;
+}
+
+function createSelect(parentElement, array, name, selected){
+	
+	//Create and append select list
+	var selectList = document.createElement("select");
+	parentElement.appendChild(selectList);	
+	selectList.className = name;
+
+	//Create and append the default option
+	var option = document.createElement("option");
+	option.text = "Select item!";
+	option.label = "invalid";
+	option.selected = true;
+	option.hidden = true;
+	option.disabled = true;
+	selectList.appendChild(option);
+
+	//Create and append the options
+	for (var i = 0; i < array.length; i++) {
+		var option = document.createElement("option");
+		option.setAttribute("value", array[i]);
+		if(selected === array[i]){
+			option.selected = true;
+		}
+		option.text = array[i];
+		selectList.appendChild(option);
+	}
+	
+}
+
+function clearSelected(selcet){
+    var elements = selcet.options;
+
+    for(var i = 0; i < elements.length; i++){
+      elements[i].selected = false;
+    }
+  }
+
+

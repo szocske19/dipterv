@@ -2448,7 +2448,7 @@ mxEditor.prototype.showProperties = function (cell)
 			// Displays the contents in a window and stores a reference to the
 			// window for later hiding of the window
 			this.properties = new mxWindow(mxResources.get(this.propertiesResource) ||
-				this.propertiesResource, node, x, y, this.propertiesWidth, this.propertiesHeight, false);
+				this.propertiesResource, node, x, y, null, this.propertiesHeight, false);
 			this.properties.setVisible(true);
 		}
 	}
@@ -2487,29 +2487,29 @@ mxEditor.prototype.createProperties = function (cell)
 		var id = form.addText('ID', cell.getId());
 		id.setAttribute('readonly', 'true');
 
-		var geo = null;
-		var yField = null;
-		var xField = null;
-		var widthField = null;
-		var heightField = null;
+		// var geo = null;
+		// var yField = null;
+		// var xField = null;
+		// var widthField = null;
+		// var heightField = null;
 
-		// Adds fields for the location and size
-		if (model.isVertex(cell))
-		{
-			geo = model.getGeometry(cell);
+		// // Adds fields for the location and size
+		// if (model.isVertex(cell))
+		// {
+		// 	geo = model.getGeometry(cell);
 			
-			if (geo != null)
-			{
-				yField = form.addText('top', geo.y);
-				xField = form.addText('left', geo.x);
-				widthField = form.addText('width', geo.width);
-				heightField = form.addText('height', geo.height);
-			}
-		}
+		// 	if (geo != null)
+		// 	{
+		// 		yField = form.addText('top', geo.y);
+		// 		xField = form.addText('left', geo.x);
+		// 		widthField = form.addText('width', geo.width);
+		// 		heightField = form.addText('height', geo.height);
+		// 	}
+		// }
 		
-		// Adds a field for the cell style			
-		var tmp = model.getStyle(cell);
-		var style = form.addText('Style', tmp || '');
+		// // Adds a field for the cell style			
+		// var tmp = model.getStyle(cell);
+		// var style = form.addText('Style', tmp || '');
 		
 		// Creates textareas for each attribute of the
 		// user object within the cell
@@ -2520,10 +2520,30 @@ mxEditor.prototype.createProperties = function (cell)
 		{
 			// Creates a textarea with more lines for
 			// the cell label
-			var val = attrs[i].value;
-			texts[i] = form.addTextarea(attrs[i].nodeName, val,
-				(attrs[i].nodeName == 'label') ? 4 : 2);
+			if (attrs[i].nodeName.toLowerCase() !== "id") {
+				var val = attrs[i].value;
+				texts[i] = form.addTextarea(attrs[i].nodeName, val,
+					(attrs[i].nodeName == 'label') ? 4 : 2);
+			}
 		}
+
+		var arrayChildren = value.getElementsByTagName("Array");
+		var arraySelect = [];
+
+		var defaultArray = ["a", "b", "c"] //TODO get valide data
+
+		if (arrayChildren != null)
+		{
+			for (var i = 0; i < arrayChildren.length; i += 1)
+			{
+				var listName = arrayChildren[i].getAttribute("as");
+				var values = mxUtils.getAllValueOfElementsofArray(arrayChildren[i]);
+				arraySelect.push(form.addMultiCombo(listName, defaultArray, values));
+					
+			}
+		}
+
+		
 		
 		// Adds an OK and Cancel button to the dialog
 		// contents and implements the respective
@@ -2541,27 +2561,27 @@ mxEditor.prototype.createProperties = function (cell)
 			model.beginUpdate();
 			try
 			{
-				if (geo != null)
-				{
-					geo = geo.clone();
+				// if (geo != null)
+				// {
+				// 	geo = geo.clone();
 					
-					geo.x = parseFloat(xField.value);
-					geo.y = parseFloat(yField.value);
-					geo.width = parseFloat(widthField.value);
-					geo.height = parseFloat(heightField.value);
+				// 	geo.x = parseFloat(xField.value);
+				// 	geo.y = parseFloat(yField.value);
+				// 	geo.width = parseFloat(widthField.value);
+				// 	geo.height = parseFloat(heightField.value);
 					
-					model.setGeometry(cell, geo);
-				}
+				// 	model.setGeometry(cell, geo);
+				// }
 				
-				// Applies the style
-				if (style.value.length > 0)
-				{
-					model.setStyle(cell, style.value);
-				}
-				else
-				{
-					model.setStyle(cell, null);
-				}
+				// // Applies the style
+				// if (style.value.length > 0)
+				// {
+				// 	model.setStyle(cell, style.value);
+				// }
+				// else
+				// {
+				// 	model.setStyle(cell, null);
+				// }
 				
 				// Creates an undoable change for each
 				// attribute and executes it using the
@@ -2569,10 +2589,43 @@ mxEditor.prototype.createProperties = function (cell)
 				// part of the current transaction
 				for (var i=0; i<attrs.length; i++)
 				{
-					var edit = new mxCellAttributeChange(
-						cell, attrs[i].nodeName,
-						texts[i].value);
-					model.execute(edit);
+					if (attrs[i].nodeName.toLowerCase() !== "id") {
+						var edit = new mxCellAttributeChange(
+							cell, attrs[i].nodeName,
+							texts[i].value);
+						model.execute(edit);
+					}
+				}
+
+
+							
+				
+				for (var i=0; i<arrayChildren.length; i++)
+				{
+					if (arrayChildren[i].nodeName.toLowerCase() !== "id") {
+
+						while(arrayChildren[i].children.length >0){
+							arrayChildren[i].children[0].remove()
+						}
+
+
+						var listName = arrayChildren[i].getAttribute("as");
+						var selections = arraySelect[i].getElementsByClassName(listName);
+						if(selections != null){	
+							for (var i = 0; i < selections.length; i += 1)
+							{
+								var selectedOption = selections[i].options[selections[i].selectedIndex];
+								if(selectedOption.label !== "invalid") {
+									var doc = value.ownerDocument;
+									var addElement = doc.createElement("add");
+									addElement.setAttribute("value", selectedOption.value);
+
+									arrayChildren[0].appendChild(addElement);
+								}
+							}
+						}
+						
+					}
 				}
 				
 				// Checks if the graph wants cells to 

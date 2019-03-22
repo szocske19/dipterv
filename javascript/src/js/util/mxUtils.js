@@ -4361,6 +4361,34 @@ var mxUtils =
 		}
 		
 		return dragSource;
+	},
+
+	addXmlAddElement: function(parent, value) {		
+		return this.addXmlElement(parent, "add", value);
+	},
+
+	addXmlElement: function(parent, type, value) {
+		const doc = parent.ownerDocument;
+		const newObject = doc.createElement(type);
+		newObject.setAttribute("value", value);
+		
+		return newObject;
+	},
+
+	getAllValueOfElementsofArray: function(array){
+		var children = array.children;
+		var values = []
+		
+		if (children != null)
+		{
+				var childCount = children.length;
+				
+				for (var i = 0; i < childCount; i += 1)
+				{
+					values.push(children[i].getAttribute("value"));
+				}
+		}
+		return values;
 	}
 
 };
