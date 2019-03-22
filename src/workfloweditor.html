@@ -102,26 +102,37 @@
 					return style['constituent'] == '1';
 				};
 
-				var button = mxUtils.button('View XML', function()
+				var button = mxUtils.button('Show XML', function()
 				{
 					var encoder = new mxCodec();
 					var node = encoder.encode(graph.getModel());
 					xml = mxUtils.getPrettyXml(node);
 					output = `<pre>${syntaxHighlight(xml)}</pre>`
-					document.getElementById('to').innerHTML = output;
+					document.getElementById('xmlViewerTo').innerHTML = output;
 				});
-				
-				var to = document.getElementById('xmlViewer');
-				to.insertBefore(button, document.getElementById('to'));
 
-				var button2 = mxUtils.button('generater vql', function()
+				var xmlViewerTD = document.getElementById('xmlViewerTD');
+				xmlViewerTD.appendChild(button);
+
+				var xmlViewerTable = document.getElementById('xmlViewer');
+
+				var XmlViewerWindow = new mxWindow('Xml Viewer', xmlViewerTable, 1200, 100, null, null, false, true);
+				XmlViewerWindow.setVisible(true);
+				
+
+				var button2 = mxUtils.button('Generate vql', function()
 				{
 					var output = VqlGenerator.generate(graph);
-					document.getElementById('to2').innerHTML = output;
+					document.getElementById('vqlViewerTo').innerHTML = output;
 				});
-				
-				var vqlForm = document.getElementById('vqlViewer');
-				vqlForm.insertBefore(button2, document.getElementById('to2'));
+
+				var vqlViewerTD = document.getElementById('vqlViewerTD');
+				vqlViewerTD.appendChild(button2);
+
+				var vqlViewerTable = document.getElementById('vqlViewer');
+
+				var VqlViewerWindow = new mxWindow('Vql Viewer', vqlViewerTable, 1200, 200, null, null, false, true);
+				VqlViewerWindow.setVisible(true);
 			}
 		};
 	</script>
@@ -159,14 +170,24 @@
 	<div id="status" class="base" align="right" style="white-space:nowrap;">
 		<!-- Status Here -->
 	</div>
-	<div id="graph" style="float: left; position:relative;overflow:auto;width:1200px;height:800px;background:url('images/grid.gif');border:6px solid gray;cursor:default;">
+	<div id="graph" style="float: left; position:absolute;overflow:auto;background:url('images/grid.gif');border:6px solid gray;cursor:default;">
 		<!-- Graph Here -->
 	</div>
-	<div id="xmlViewer" style="float: left;margin-left: 100;" >
-		<div id="to"; contenteditable="true";></div>
-	</div>
-	<div id="vqlViewer" style="float: left;margin-left: 100;" >
-			<div id="to2"; contenteditable="true";></div>
-		</div>
+	<table id="xmlViewer">
+		<tr>
+			<td id= "xmlViewerTD"></td>
+		</tr>
+		<tr>
+			<td id="xmlViewerTo" contenteditable="true"></td>
+		</tr>
+	</table>
+	<table id="vqlViewer">
+		<tr>
+			<td id= "vqlViewerTD"></td>
+		</tr>
+		<tr>
+			<td id="vqlViewerTo" contenteditable="true"></td>
+		</tr>
+	</table>
 </body>
 </html>
