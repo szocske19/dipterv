@@ -377,7 +377,7 @@ function mxEditor(config)
 		if (this.onInit != null)
 		{
 			// Invokes the <onInit> hook
-			this.onInit();
+			this.onInit(this.toolbar.editor);
 		}
 		
 		// Automatic deallocation of memory
@@ -2945,6 +2945,24 @@ mxEditor.prototype.createEdge = function (source, target)
 		geo.relative = true;
 		e.setGeometry(geo);
 	}
+
+	var usedNames = [];
+
+	if(source !== null){
+		if(source.parent !== null && source.parent.children !== null){
+			usedNames = source.parent.children.map(function(item) {
+				return item.getAttribute("name");
+			});
+		}
+	} else {
+		defaultParent = this.graph.getDefaultParent();
+		if(defaultParent.children !== null){
+			usedNames = defaultParent.children.map(function(item) {
+				return item.getAttribute("name");
+			});
+		}
+	}
+	e.value.attributes.name.value = this.graph.getFirstUnusedName(e.value.attributes.name.value, usedNames);
 	
 	// Overrides the edge style
 	var style = this.getEdgeStyle();

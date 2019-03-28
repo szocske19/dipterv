@@ -1,5 +1,5 @@
 class VWQLEditorConfig {
-    static onInit() {
+    static onInit(editor) {
         // Disables removing cells from parents
         this.graph.graphHandler.setRemoveCellsFromParent(false);
         this.showTasks();
@@ -129,10 +129,10 @@ class VWQLEditorConfig {
 
         PortConfig.onInit(this);
 
-        graph.isCellEditable = function(cell)
-        {
-            return !this.model.isEdge(cell);
-        };
+        // graph.isCellEditable = function(cell)
+        // {
+        //     return !this.model.isEdge(cell);
+        // };
 
         var oldIsCellMovable = graph.isCellMovable;
         graph.isCellMovable = function(cell)
@@ -150,6 +150,18 @@ class VWQLEditorConfig {
         };
 
         graph.setAllowDanglingEdges(false);
+
+        graph.dblClick = function(evt, cell) {
+            // Do not fire a DOUBLE_CLICK event here as mxEditor will
+            // consume the event and start the in-place editor.
+
+            if (this.isEnabled() 
+                && !mxEvent.isConsumed(evt) 
+                && cell != null 
+                && this.isCellEditable(cell)) {              
+                    editor.showProperties(cell);             
+            }
+        };
     }
 
     static isProperParent(cell, parent) {
@@ -348,5 +360,25 @@ class VWQLEditorConfig {
         }
 
         editor.treeLayout(cell, false);
+    }
+
+    static defaultConnect(editor) {
+        editor.defaultEdge = editor.templates["edge"];
+        
+        if (editor.defaultEdge != null) {
+            editor.defaultEdge.style = null;
+        }
+    }
+
+    static straightConnect(editor) {
+        editor.defaultEdge = editor.templates["edge"];
+
+        if (editor.defaultEdge != null) {
+            editor.defaultEdge.style = 'straightEdge';
+        }
+    }
+
+    static pathExpressionConnect(editor) {
+        editor.defaultEdge = editor.templates["pathexpression"];
     }
 }

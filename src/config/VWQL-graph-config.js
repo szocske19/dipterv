@@ -46,7 +46,10 @@ class VWQLGraphConfig {
     }
 
     static convertValueToString(cell) {
-        return cell.getAttribute('name');
+        if (!this.isSameTamplate(cell, "edge")) {
+            return cell.getAttribute('name');
+        }
+        return "";
     }
 
     static valueForCellChanged(cell, value) {

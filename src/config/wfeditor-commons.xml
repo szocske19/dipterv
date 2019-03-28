@@ -34,9 +34,9 @@
 			</PatternBody>
 		</add>		
 		<add as="pathexpression">
-			<PathExpression name="PathExpression">
-				<mxCell vertex="1" style="pathexpression">		
-					<mxGeometry as="geometry" width="60" height="50"/>
+			<PathExpression name="PathExpression" type="">
+				<mxCell edge="1" style="pathexpression">		
+					<mxGeometry as="geometry" isRelative="1"/>
 				</mxCell>
 			</PathExpression>
 		</add>
