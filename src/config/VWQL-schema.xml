@@ -1,0 +1,82 @@
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified">
+  <xs:element name="mxGraphModel" type="mxGraphModelType"/>
+  <xs:complexType name="addType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:string" name="value" use="optional"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="ArrayType">
+    <xs:sequence>
+      <xs:element type="addType" name="add" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="as"/>
+  </xs:complexType>
+  <xs:complexType name="VWQLType">
+    <xs:sequence>
+      <xs:element type="ArrayType" name="Array"/>
+      <xs:element type="xs:string" name="mxCell"/>
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="name"/>
+    <xs:attribute type="xs:string" name="packageName"/>
+    <xs:attribute type="xs:byte" name="id"/>
+  </xs:complexType>
+  <xs:complexType name="mxCellType" mixed="true">
+    <xs:sequence>
+      <xs:element type="mxGeometryType" name="mxGeometry" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attribute type="xs:byte" name="parent" use="optional"/>
+    <xs:attribute type="xs:string" name="style" use="optional"/>
+    <xs:attribute type="xs:byte" name="vertex" use="optional"/>
+    <xs:attribute type="xs:byte" name="edge" use="optional"/>
+    <xs:attribute type="xs:byte" name="source" use="optional"/>
+    <xs:attribute type="xs:byte" name="target" use="optional"/>
+  </xs:complexType>
+  <xs:complexType name="LayerType">
+    <xs:sequence>
+      <xs:element type="mxCellType" name="mxCell"/>
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="name"/>
+    <xs:attribute type="xs:byte" name="id"/>
+  </xs:complexType>
+  <xs:complexType name="mxGeometryType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:short" name="x" use="optional"/>
+        <xs:attribute type="xs:short" name="y" use="optional"/>
+        <xs:attribute type="xs:byte" name="width" use="optional"/>
+        <xs:attribute type="xs:byte" name="height" use="optional"/>
+        <xs:attribute type="xs:string" name="as" use="optional"/>
+        <xs:attribute type="xs:byte" name="isRelative" use="optional"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="VariableType">
+    <xs:sequence>
+      <xs:element type="mxCellType" name="mxCell"/>
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="name" use="optional"/>
+    <xs:attribute type="xs:byte" name="id" use="optional"/>
+  </xs:complexType>
+  <xs:complexType name="PathExpressionType">
+    <xs:sequence>
+      <xs:element type="mxCellType" name="mxCell"/>
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="name"/>
+    <xs:attribute type="xs:byte" name="id"/>
+  </xs:complexType>
+  <xs:complexType name="rootType">
+    <xs:sequence>
+      <xs:element type="VWQLType" name="VWQL"/>
+      <xs:element type="LayerType" name="Layer"/>
+      <xs:element type="VariableType" name="Variable" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element type="PathExpressionType" name="PathExpression"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="mxGraphModelType">
+    <xs:sequence>
+      <xs:element type="rootType" name="root"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

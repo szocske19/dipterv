@@ -1,0 +1,165 @@
+<html>
+<head>
+    <script type="text/javascript" src="Jsonix-all.js"></script>
+    <!-- <script src="../exampleGraph2.txt"></script> -->
+    <script type="text/javascript">
+		mxBasePath = '../javascript/src';
+	</script>
+    <script type="text/javascript" src="../javascript/src/js/mxClient.js"></script>
+    <script type="text/javascript">
+    
+
+    function main(container) {
+        var config = mxUtils.load('config/VWQL-schema.xml').getDocumentElement();
+
+
+        var doc = mxUtils.parseXml(config);
+        var node = doc.documentElement;
+
+
+        var PO = {
+            name: 'PO',
+            typeInfos: [{
+                type: 'classInfo',
+                localName: 'PurchaseOrderType',
+                propertyInfos: [{
+                    type: 'element',
+                    name: 'shipTo',
+                    elementName: 'shipTo',
+                    typeInfo: 'PO.USAddress'
+                }, {
+                    type: 'element',
+                    name: 'billTo',
+                    elementName: 'billTo',
+                    typeInfo: 'PO.USAddress'
+                }, {
+                    type: 'element',
+                    name: 'comment',
+                    elementName: 'comment',
+                    typeInfo: 'String'
+                }, {
+                    type: 'element',
+                    name: 'items',
+                    elementName: 'items',
+                    typeInfo: 'PO.Items'
+                }, {
+                    name: 'orderDate',
+                    typeInfo: 'Calendar',
+                    attributeName: 'orderDate',
+                    type: 'attribute'
+                }]
+            }, {
+                type: 'classInfo',
+                localName: 'Items',
+                propertyInfos: [{
+                    type: 'element',
+                    name: 'item',
+                    collection: true,
+                    elementName: 'item',
+                    typeInfo: 'PO.Item'
+                }]
+            }, {
+                type: 'classInfo',
+                localName: 'USAddress',
+                propertyInfos: [{
+                    type: 'element',
+                    name: 'name',
+                    elementName: 'name',
+                    typeInfo: 'String'
+                }, {
+                    type: 'element',
+                    name: 'street',
+                    elementName: 'street',
+                    typeInfo: 'String'
+                }, {
+                    type: 'element',
+                    name: 'city',
+                    elementName: 'city',
+                    typeInfo: 'String'
+                }, {
+                    type: 'element',
+                    name: 'state',
+                    elementName: 'state',
+                    typeInfo: 'String'
+                }, {
+                    type: 'element',
+                    name: 'zip',
+                    elementName: 'zip',
+                    typeInfo: 'Decimal'
+                }, {
+                    name: 'country',
+                    typeInfo: 'String',
+                    attributeName: 'country',
+                    type: 'attribute'
+                }]
+            }, {
+                type: 'classInfo',
+                localName: 'Item',
+                propertyInfos: [{
+                    type: 'element',
+                    name: 'productName',
+                    elementName: 'productName',
+                    typeInfo: 'String'
+                }, {
+                    type: 'element',
+                    name: 'quantity',
+                    elementName: 'quantity',
+                    typeInfo: 'Int'
+                }, {
+                    type: 'element',
+                    name: 'usPrice',
+                    elementName: 'USPrice',
+                    typeInfo: 'Decimal'
+                }, {
+                    type: 'element',
+                    name: 'comment',
+                    elementName: 'comment',
+                    typeInfo: 'String'
+                }, {
+                    type: 'element',
+                    name: 'shipDate',
+                    elementName: 'shipDate',
+                    typeInfo: 'Calendar'
+                }, {
+                    name: 'partNum',
+                    typeInfo: 'String',
+                    attributeName: 'partNum',
+                    type: 'attribute'
+                }]
+            }],
+            elementInfos: [{
+                elementName: 'purchaseOrder',
+                typeInfo: 'PO.PurchaseOrderType'
+            }, {
+                elementName: 'comment',
+                typeInfo: 'String'
+            }]
+        };
+
+
+        
+
+        // First we construct a Jsonix context - a factory for unmarshaller (parser)
+        // and marshaller (serializer)
+        var context = new Jsonix.Context([PO]);
+
+        // Then we create a unmarshaller
+        var unmarshaller = context.createUnmarshaller();
+        var marshaller = context.createMarshaller();
+
+        context.getTypeInfoByValue("propertyInfos");
+
+        // Unmarshal an object from the XML retrieved from the URL
+        unmarshaller.unmarshalURL('po.xml',
+        // This callback function will be provided with the result
+        // of the unmarshalling
+        function (unmarshalled) {
+            console.log(unmarshalled.value.shipTo.name); // Alice Smith
+            console.log(unmarshalled.value.items.item[1].productName); // Baby Monitor
+        });
+    }
+    </script>
+    </head>
+<body onload="main()">
+</body>
+</html>
