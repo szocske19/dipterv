@@ -216,7 +216,7 @@ mxForm.prototype.addMultiCombo = function(name, array, selectedArray){
 
 	if(selectedArray != null) {
 		for (var i = 0; i < selectedArray.length; i++) {
-			insRow(table, array, name, selectedArray[i]);
+			insRow(table, array, name, selectedArray[i], true);
 		}
 		if(selectedArray.length < 2) {
 			table.firstElementChild.firstElementChild.lastElementChild.firstElementChild.disabled = true;
@@ -226,7 +226,7 @@ mxForm.prototype.addMultiCombo = function(name, array, selectedArray){
 	var button = document.createElement("button");
 	button.innerHTML = "Add";
 	button.onclick = function() {
-		insRow(table, array, name, null);
+		insRow(table, array, name, null, true);
 	}	
 
 	div.appendChild(table);
@@ -245,7 +245,26 @@ function deleteRow(table, button) {
 	// }
 }
 
-function insRow(table, array, name, selected) {
+mxForm.prototype.addSingleCombo = function(name, array, selectedElement){
+
+	var div = document.createElement("div");
+	var table = document.createElement("table");
+
+	div.appendChild(table);
+
+	if(selectedElement != null) {
+		if (array.indexOf(selectedElement) === -1)  {
+			array.push(selectedElement);
+		}		
+	}
+
+	insRow(table, array, name, selectedElement, false);
+
+	return this.addField(name, div);
+
+}
+
+function insRow(table, array, name, selected, removeBTNrequired) {
 	var filas = table.rows.length;
 	var row = table.insertRow(filas);
 	var cell1 = row.insertCell(0);
@@ -253,10 +272,12 @@ function insRow(table, array, name, selected) {
 	
 	createSelect(cell1, array, name, selected);
 	
-	var button = document.createElement('button');
-	button.innerHTML = "Remove";
-	button.onclick = function() {deleteRow(table ,button);}
-	cell2.appendChild(button);
+	if(removeBTNrequired) {
+		var button = document.createElement('button');
+		button.innerHTML = "Remove";
+		button.onclick = function() {deleteRow(table ,button);}
+		cell2.appendChild(button);
+	}
 	
 	// table.firstElementChild.firstElementChild.lastElementChild.firstElementChild.disabled = false;
 }

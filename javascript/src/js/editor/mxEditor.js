@@ -2515,12 +2515,17 @@ mxEditor.prototype.createProperties = function (cell)
 		// user object within the cell
 		var attrs = value.attributes;
 		var texts = [];
+
+		var defaultArray = eCoreHandler.getEClassifiers();
 		
 		for (var i = 0; i < attrs.length; i++)
 		{
 			// Creates a textarea with more lines for
 			// the cell label
-			if (attrs[i].nodeName.toLowerCase() !== "id") {
+			if (attrs[i].nodeName.toLowerCase() === "type") {
+				var val = attrs[i].value;
+				texts[i] = form.addSingleCombo("type", defaultArray, val);
+			} else if (attrs[i].nodeName.toLowerCase() !== "id") {
 				var val = attrs[i].value;
 				texts[i] = form.addTextarea(attrs[i].nodeName, val,
 					(attrs[i].nodeName == 'label') ? 4 : 2);
@@ -2530,7 +2535,8 @@ mxEditor.prototype.createProperties = function (cell)
 		var arrayChildren = value.getElementsByTagName("Array");
 		var arraySelect = [];
 
-		var defaultArray = ["a", "b", "c"] //TODO get valide data
+		// var defaultArray = ["a", "b", "c"] //TODO get valide data
+		
 
 		if (arrayChildren != null)
 		{
@@ -2589,10 +2595,15 @@ mxEditor.prototype.createProperties = function (cell)
 				// part of the current transaction
 				for (var i=0; i<attrs.length; i++)
 				{
+					var textValue = texts[i].value
+					if (attrs[i].nodeName.toLowerCase() === "type") {
+						var selection = texts[i].getElementsByClassName(attrs[i].nodeName)[0];
+						var textValue = selection.options[selection.selectedIndex].value;
+					}
 					if (attrs[i].nodeName.toLowerCase() !== "id") {
 						var edit = new mxCellAttributeChange(
 							cell, attrs[i].nodeName,
-							texts[i].value);
+							textValue);
 						model.execute(edit);
 					}
 				}

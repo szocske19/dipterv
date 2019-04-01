@@ -18,16 +18,27 @@
         // Then we create a unmarshaller
         var unmarshaller = context.createUnmarshaller();
 
+        // // Unmarshal an object from the XML retrieved from the URL
+        // unmarshaller.unmarshalURL('config/cps.ecore.xsd',
+        // // This callback function will be provided with the result
+        // // of the unmarshalling
+        // function (unmarshalled) {
+        //     var unmarshalledJS = document.getElementById('unmarshalledJS');
+        //     unmarshalledJS.innerHTML = JSON.stringify(unmarshalled, null, 2);
+
+        //     unmarshalled_eCore = unmarshalled;
+        //     return;
+        // });
+
         // Unmarshal an object from the XML retrieved from the URL
         unmarshaller.unmarshalURL('config/cps.ecore.xsd',
         // This callback function will be provided with the result
         // of the unmarshalling
-        function (unmarshalled) {
-            var unmarshalledJS = document.getElementById('unmarshalledJS');
-            unmarshalledJS.innerHTML = JSON.stringify(unmarshalled, null, 2);
+        (unmarshalled) => {
+                var unmarshalledJS = document.getElementById('unmarshalledJS');
+                unmarshalledJS.innerHTML = JSON.stringify(unmarshalled, null, 2);
 
-            unmarshalled_eCore = unmarshalled;
-            return;
+                unmarshalledECore = unmarshalled;
         });
     }
     </script>
