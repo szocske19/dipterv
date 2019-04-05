@@ -2670,6 +2670,71 @@ mxEditor.prototype.createProperties = function (cell)
 	return null;
 };
 
+mxEditor.prototype.createImportFile = function()
+{
+	this.graph.stopEditing(true);
+
+	this.hideImportFile();
+
+	var form = new mxForm('Graph Import');
+	form.importFileForm("File", "importFile");
+
+	// Defines the function to be executed when the
+	// OK button is pressed in the dialog
+	var okFunction = mxUtils.bind(this, function()
+	{
+		var importFile = document.getElementById("importFile");
+		var file = importFile.files[0];
+
+		var ready = false;		
+
+		var reader = new FileReader();
+		reader.onloadend = function(evt) {
+			// file is loaded
+			result = evt.target.result;
+		
+			ready = true;
+		};
+		var blob = file.slice(0, file.size);
+		reader.readAsBinaryString(blob);
+
+
+		var that = this;
+		var numberOfAttempts = 0
+		var check = function() {
+			numberOfAttempts += 1;
+			if (ready === true) {
+				var xml = mxUtils.parseXml(reader.result);
+				that.readGraphModel(xml.documentElement);
+				that.hideImportFile()
+				return;
+			}
+			if(numberOfAttempts >= 10){
+				// failed file scan
+				that.hideImportFile()
+				return;
+			}
+			setTimeout(check, 1000);
+		}
+		
+		check();
+	});
+
+	// Defines the function to be executed when the
+	// Cancel button is pressed in the dialog
+	var cancelFunction = mxUtils.bind(this, function()
+	{
+		// Hides the dialog
+		this.hideImportFile();
+	});
+
+	form.addButtons(okFunction, cancelFunction);
+
+	this.importFile = new mxWindow(mxResources.get(this.propertiesResource) 
+		|| this.propertiesResource, form.table, 250, 250, null, this.propertiesHeight, false);
+	this.importFile.setVisible(true);
+} 
+
 /**
  * Function: hideProperties
  * 
@@ -2681,6 +2746,20 @@ mxEditor.prototype.hideProperties = function ()
 	{
 		this.properties.destroy();
 		this.properties = null;
+	}
+};
+
+/**
+ * Function: hideImportFile
+ * 
+ * Hides the ImportFile dialog.
+ */
+mxEditor.prototype.hideImportFile = function ()
+{
+	if (this.importFile != null)
+	{
+		this.importFile.destroy();
+		this.importFile = null;
 	}
 };
 

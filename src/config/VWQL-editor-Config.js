@@ -205,8 +205,40 @@ class VWQLEditorConfig {
         return this.isSwimlane(cell);
     }
 
+    static saveGraph(editor) {
+        if (editor.graph.isEditing())
+        {
+            editor.graph.stopEditing();
+        }
+
+        var encoder = new mxCodec();
+        var node = encoder.encode(editor.graph.getModel());
+
+        var vwql = VwqlUtils.getElementByID(editor.graph, "0");
+        var vwqlName = "vwqlGraph";
+        if (vwql != null) {
+            vwqlName = vwql.getAttribute("name") || vwqlName;
+        }
+        vwqlName = vwqlName.concat(".xml");
+
+        var xml = mxUtils.getPrettyXml(node);
+
+        var pom = document.createElement('a');
+        pom.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(xml));
+        pom.setAttribute('download', vwqlName);
+
+        if (document.createEvent) {
+            var event = document.createEvent('MouseEvents');
+            event.initEvent('click', true, true);
+            pom.dispatchEvent(event);
+        }
+        else {
+            pom.click();
+        }        
+    }
+
     static open(editor) {
-        editor.open(mxUtils.prompt('Enter filename', 'workflow.xml'));
+        editor.createImportFile();
     }
 
     static openHref(editor, cell) {

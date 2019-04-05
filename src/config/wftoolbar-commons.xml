@@ -12,6 +12,10 @@
 	<add as="undo" action="undo" icon="images/undo.gif"/>
 	<add as="redo" action="redo" icon="images/redo.gif"/>
 	<br/><hr/>
+	<separator name = "Import/Export"/>
+	<add as="saveGraph" action="saveGraph" icon="images/save.gif"/>
+	<add as="open" action="open" icon="images/open.gif"/>	
+	<br/><hr/>
 	<add as="cut" action="cut" icon="images/cut.gif"/>
 	<add as="copy" action="copy" icon="images/copy.gif"/>
 	<add as="paste" action="paste" icon="images/paste.gif"/>

@@ -13,4 +13,14 @@ class VwqlUtils {
         }
         return elements;
     }
+
+    static getElementByID(graph, ID) {
+        var cells = Object.values(graph.getModel().cells);
+        for (var i = 0; i < cells.length; i++) {
+            if (cells[i].getId() === ID) {
+                return cells[i];
+            }
+        }        
+        return null;
+    }
 }

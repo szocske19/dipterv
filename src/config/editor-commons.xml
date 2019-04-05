@@ -68,5 +68,6 @@
 		<add as="toggleShadow">VWQLEditorConfig.toggleShadow</add>
 		<add as="horizontalTree">VWQLEditorConfig.horizontalTree</add>
 		<add as="verticalTree">VWQLEditorConfig.verticalTree</add>
+		<add as="saveGraph">VWQLEditorConfig.saveGraph</add>
 	</Array>
 </mxEditor>

@@ -264,6 +264,14 @@ mxForm.prototype.addSingleCombo = function(name, array, selectedElement){
 
 }
 
+mxForm.prototype.importFileForm = function(name, className){
+	var input = document.createElement("input");
+	input.id = className;
+	input.type = "file";
+
+	return this.addField(name, input);
+}
+
 function insRow(table, array, name, selected, removeBTNrequired) {
 	var filas = table.rows.length;
 	var row = table.insertRow(filas);
