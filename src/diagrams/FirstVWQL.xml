@@ -1,0 +1,64 @@
+<mxGraphModel>
+	<root>
+		<VWQL name="FirstVWQL" packageName="my.first.vwql" id="0">
+			<Array as="emfPackages">
+				<add value="org.eclipse.emf.ecore.EClass"/>
+				<add value="org.eclipse.emf.ecore.EPackage"/>
+				<add value="a"/>
+			</Array>
+			<mxCell/>
+		</VWQL>
+		<Layer name="Default Layer" id="1">
+			<mxCell parent="0"/>
+		</Layer>
+		<Pattern name="Pattern1" id="2">
+			<mxCell style="swimlane;fillColor=#83027F" vertex="1" connectable="0" isSwimlane="1" parent="1">
+				<mxGeometry x="390" y="210" width="200" height="480" as="geometry"/>
+			</mxCell>
+		</Pattern>
+		<PatternBody name="PatternBody1" description="" href="" id="3">
+			<mxCell style="fontSize=9;" vertex="1" connectable="0" port="2" parent="2">
+				<mxGeometry y="23" width="200" height="457" as="geometry"/>
+			</mxCell>
+		</PatternBody>
+		<Variable name="Variable1" id="6">
+			<mxCell style="rounded" vertex="1" parent="3">
+				<mxGeometry x="60" y="290" width="80" height="30" as="geometry"/>
+			</mxCell>
+		</Variable>
+		<Variable name="Variable2" id="7">
+			<mxCell style="rounded" vertex="1" parent="3">
+				<mxGeometry x="80" y="120" width="80" height="30" as="geometry"/>
+			</mxCell>
+		</Variable>
+		<PathExpression name="PathExpression1" type="" id="10">
+			<mxCell style="pathexpression" edge="1" parent="3" source="7" target="6">
+				<mxGeometry isRelative="1" as="geometry"/>
+			</mxCell>
+		</PathExpression>
+		<Parameter name="Parameter1" type="" id="4">
+			<mxCell style="fontSize=9;shape=ellipse;resizable=0;" vertex="1" port="1" parent="2">
+				<mxGeometry y="0.49166666666666664" width="32" height="32" relative="1" as="geometry">
+					<mxPoint x="-16" y="-16" as="offset"/>
+				</mxGeometry>
+			</mxCell>
+		</Parameter>
+		<Parameter name="Parameter2" type="" id="5">
+			<mxCell style="fontSize=9;shape=ellipse;resizable=0;" vertex="1" port="1" parent="2">
+				<mxGeometry x="1" y="0.3875" width="32" height="32" relative="1" as="geometry">
+					<mxPoint x="-16" y="-16" as="offset"/>
+				</mxGeometry>
+			</mxCell>
+		</Parameter>
+		<Edge name="1" description="" id="8">
+			<mxCell edge="1" parent="2" source="4" target="6">
+				<mxGeometry x="-390" y="-210" isRelative="1" as="geometry"/>
+			</mxCell>
+		</Edge>
+		<Edge name="2" description="" id="9">
+			<mxCell edge="1" parent="2" source="5" target="7">
+				<mxGeometry x="-390" y="-210" isRelative="1" as="geometry"/>
+			</mxCell>
+		</Edge>
+	</root>
+</mxGraphModel>
