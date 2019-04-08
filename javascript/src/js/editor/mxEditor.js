@@ -2516,7 +2516,7 @@ mxEditor.prototype.createProperties = function (cell)
 		var attrs = value.attributes;
 		var texts = [];
 
-		var defaultArray = eCoreHandler.getEClassifiers();
+		var eClassifierNames = eCoreHandler.getEClassifierNames();
 		
 		for (var i = 0; i < attrs.length; i++)
 		{
@@ -2524,7 +2524,20 @@ mxEditor.prototype.createProperties = function (cell)
 			// the cell label
 			if (attrs[i].nodeName.toLowerCase() === "type") {
 				var val = attrs[i].value;
-				texts[i] = form.addSingleCombo("type", defaultArray, val);
+				texts[i] = form.addSingleCombo("type", eClassifierNames, val);
+			} else if (attrs[i].nodeName.toLowerCase() === "edgetype") {
+				var sourceType = cell.source.value.getAttribute("type");
+				var allReferences;
+				if(sourceType) {
+					var eClassifier = eCoreHandler.getEClassifierByName(sourceType);
+					allReferences = eCoreHandler.getAllEReferencesOfClassifier(eClassifier);
+				} else {
+					allReferences = eCoreHandler.getAllEReferences();
+				}				
+				var allReferencesNames = eCoreHandler.getEReferencesFullName(allReferences);
+
+				var val = attrs[i].value;
+				texts[i] = form.addSingleCombo("edgetype", allReferencesNames, val);
 			} else if (attrs[i].nodeName.toLowerCase() !== "id") {
 				var val = attrs[i].value;
 				texts[i] = form.addTextarea(attrs[i].nodeName, val,
@@ -2534,9 +2547,6 @@ mxEditor.prototype.createProperties = function (cell)
 
 		var arrayChildren = value.getElementsByTagName("Array");
 		var arraySelect = [];
-
-		// var defaultArray = ["a", "b", "c"] //TODO get valide data
-		
 
 		if (arrayChildren != null)
 		{
@@ -2559,9 +2569,6 @@ mxEditor.prototype.createProperties = function (cell)
 		// OK button is pressed in the dialog
 		var okFunction = mxUtils.bind(this, function()
 		{
-			// Hides the dialog
-			this.hideProperties();
-			
 			// Supports undo for the changes on the underlying
 			// XML structure / XML node attribute changes.
 			model.beginUpdate();
@@ -2596,9 +2603,10 @@ mxEditor.prototype.createProperties = function (cell)
 				for (var i=0; i<attrs.length; i++)
 				{
 					var textValue = texts[i].value
-					if (attrs[i].nodeName.toLowerCase() === "type") {
+					if (attrs[i].nodeName.toLowerCase() === "type" 
+						|| attrs[i].nodeName.toLowerCase() === "edgetype" ) {
 						var selection = texts[i].getElementsByClassName(attrs[i].nodeName)[0];
-						var textValue = selection.options[selection.selectedIndex].value;
+						textValue = selection.options[selection.selectedIndex].value;
 					}
 					if (attrs[i].nodeName.toLowerCase() !== "id") {
 						var edit = new mxCellAttributeChange(
@@ -2608,9 +2616,6 @@ mxEditor.prototype.createProperties = function (cell)
 					}
 				}
 
-
-							
-				
 				for (var i=0; i<arrayChildren.length; i++)
 				{
 					if (arrayChildren[i].nodeName.toLowerCase() !== "id") {
@@ -2650,6 +2655,8 @@ mxEditor.prototype.createProperties = function (cell)
 			}
 			finally
 			{
+				// Hides the dialog
+				this.hideProperties();
 				model.endUpdate();
 			}
 		});

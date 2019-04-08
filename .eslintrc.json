@@ -20,6 +20,11 @@
         "func-names": "off",
         "no-unused-vars": "off",
         "quotes": "off",
-        "no-plusplus": "off"
+        "no-plusplus": "off",
+        "prefer-destructuring": "off",
+        "no-loop-func": "off",
+        "max-len": "off",
+        "no-param-reassign": "off"
+
     }
 }

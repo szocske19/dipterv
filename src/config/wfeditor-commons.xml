@@ -34,7 +34,7 @@
 			</PatternBody>
 		</add>		
 		<add as="pathexpression">
-			<PathExpression name="PathExpression" type="">
+			<PathExpression name="PathExpression" edgeType="">
 				<mxCell edge="1" style="pathexpression">		
 					<mxGeometry as="geometry" isRelative="1"/>
 				</mxCell>
@@ -103,7 +103,7 @@
 			</Shape>
 		</add> -->
 		<add as="variable">
-			<Variable name="Variable">
+			<Variable name="Variable" type="">
 				<mxCell vertex="1" style="rounded">		
 					<mxGeometry as="geometry" width="80" height="30"/>
 				</mxCell>
