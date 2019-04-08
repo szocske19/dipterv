@@ -94,7 +94,8 @@
 			}
 			else
 			{
-				var unmarshalledECore = generateECore("config/cps.ecore.xsd");
+				generateECore("config/cps.ecore.xsd");
+				generateECore("config/GraphicalPatternLanguage.xsd");
 				var editor = createEditor('config/workfloweditor.xml');
 				var graph = editor.graph
 
