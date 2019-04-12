@@ -78,20 +78,24 @@ var eCoreHandler = {
             return undefined;
         }
 
-        var separation = name.search('::');
-        var prefix = "";
-        var classifier = name;
-        if (separation >= 0) {
-            prefix = name.substring(0, separation);
-            classifier = name.substring(separation + 2, name.length);
-        }
-
-        for (var i = 0; i < eCoreHandler.eCores.length; i++) {
-            if (prefix === eCoreHandler.eCores[i].value.nsPrefix) {
-                return eCoreHandler.eCores[i].value.eClassifiers.find(o => o.name === classifier);
+        var nameTags = eCoreHandler.separatedNameTags(name);
+        if (nameTags.length === 2) {
+            for (var i = 0; i < eCoreHandler.eCores.length; i++) {
+                if (nameTags[0] === eCoreHandler.eCores[i].value.nsPrefix) {
+                    return eCoreHandler.eCores[i].value.eClassifiers.find(o => o.name === nameTags[1]);
+                }
             }
         }
+                
         return undefined;
+    },
+
+    separatedNameTags(name) {
+        if (!name) {
+            return [];
+        }
+
+        return name.split('::');
     },
 
     getAllSuperTypes(eClassifier) {
@@ -167,7 +171,7 @@ var eCoreHandler = {
     },
 
     getEReferencesFullName(eReferences) {
-        return eReferences.map(eReference => `${eReference.source.package.value.nsPrefix}::${eReference.name}`);
+        return eReferences.map(eReference => `${eReference.source.name}::${eReference.name}`);
     },
 
 };

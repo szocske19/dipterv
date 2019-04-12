@@ -47,15 +47,41 @@ class VWQLGraphConfig {
 
     static convertValueToString(cell) {
         var template = cell.value.nodeName.toLowerCase();
-        if (VWQLEditorConfig.isInTheList(["enumliteral", "booleanliteral", "numberliteral"], template)) {
+        var label; 
+        var nameTags;
+        var type; 
+        if (VWQLEditorConfig.isInTheList(["booleanliteral", "numberliteral"], template)) {
             return cell.value.getAttribute('value');
         }
+        if (template === "enumliteral") {
+            label = cell.value.getAttribute('value');
+            nameTags = eCoreHandler.separatedNameTags(label);
+            if (nameTags.length === 2) {
+                return `${nameTags[1]}::${nameTags[2]}`;
+            } 
+            return "";            
+        } 
         if (template === "stringliteral") {
-            return `"${cell.value.getAttribute('value')}"`;
+            label = cell.value.getAttribute('value');
+            return `"${label}"`;
         } 
         if (template === "pathexpression") {
-            return cell.value.getAttribute('edgeType');
-        } 
+            label = cell.value.getAttribute('edgeType');
+            nameTags = eCoreHandler.separatedNameTags(label);
+            if (nameTags.length === 2) {
+                return `${nameTags[1]}`;
+            }
+            return "";
+        }
+        if (template === "variable") {
+            label = cell.value.getAttribute('name');
+            type = cell.value.getAttribute('type');
+            nameTags = eCoreHandler.separatedNameTags(type);
+            if (nameTags.length === 2) {
+                return `${nameTags[1]}\n${label}`;
+            }
+            return `${label}`;
+        }
         if (template !== "edge") {
             return cell.value.getAttribute('name');
         }
