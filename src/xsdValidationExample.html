@@ -2,7 +2,7 @@
 <head>
     <script type="text/javascript" src="Jsonix-all.js"></script>
     <script type="text/javascript" src="config/ecore.js"></script>
-    <script src="config/cps.ecore.xsd"></script>
+    <script src="config/cps.ecore"></script>
     <script type="text/javascript">
 		mxBasePath = '../javascript/src';
 	</script>
@@ -31,7 +31,7 @@
         // });
 
         // Unmarshal an object from the XML retrieved from the URL
-        unmarshaller.unmarshalURL('config/cps.ecore.xsd',
+        unmarshaller.unmarshalURL('config/cps.ecore',
         // This callback function will be provided with the result
         // of the unmarshalling
         (unmarshalled) => {
