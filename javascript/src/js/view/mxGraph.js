@@ -1632,6 +1632,10 @@ mxGraph.prototype.expandedImage = new mxImage(mxClient.imageBasePath + '/expande
 mxGraph.prototype.warningImage = new mxImage(mxClient.imageBasePath + '/warning'+
 	((mxClient.IS_MAC) ? '.png' : '.gif'), 16, 16);
 
+
+mxGraph.prototype.errorImage = new mxImage(mxClient.imageBasePath + '/error'+
+	((mxClient.IS_MAC) ? '.png' : '.gif'), 16, 16);	
+
 /**
  * Variable: alreadyConnectedResource
  * 
@@ -1985,6 +1989,7 @@ mxGraph.prototype.graphModelChanged = function(changes)
 	this.removeSelectionCells(this.getRemovedCellsForChanges(changes));
 	this.view.validate();
 	this.sizeDidChange();
+	Vwqlvalidation.validate(this);
 };
 
 /**
