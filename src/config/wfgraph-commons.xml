@@ -131,5 +131,10 @@
 			<add as="fontColor" value="white"/>
 			<add as="labelBackgroundColor" value="green"/>
 		</add>
+		<add as="literal">
+			<add as="shape" value="ellipse"/>
+			<add as="perimeter" value="ellipsePerimeter"/>
+			<add as="fillColor" value="purple"/>
+		</add>
 	</mxStylesheet>
 </mxGraph>

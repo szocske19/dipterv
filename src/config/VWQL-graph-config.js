@@ -46,8 +46,18 @@ class VWQLGraphConfig {
     }
 
     static convertValueToString(cell) {
-        if (!this.isSameTamplate(cell, "edge")) {
-            return cell.getAttribute('name');
+        var template = cell.value.nodeName.toLowerCase();
+        if (VWQLEditorConfig.isInTheList(["enumliteral", "booleanliteral", "numberliteral"], template)) {
+            return cell.value.getAttribute('value');
+        }
+        if (template === "stringliteral") {
+            return `"${cell.value.getAttribute('value')}"`;
+        } 
+        if (template === "pathexpression") {
+            return cell.value.getAttribute('edgeType');
+        } 
+        if (template !== "edge") {
+            return cell.value.getAttribute('name');
         }
         return "";
     }

@@ -37,6 +37,10 @@
 	<separator name = "Expressions"/>
 	<br/><hr/>
 	<add as="Variable" template="variable" icon="images/symbols/small_event.gif"/>
+	<add as="Enum literal" template="enumliteral" icon="images/symbols/small_event.gif"/>
+	<add as="String Literal" template="stringliteral" icon="images/symbols/small_event.gif"/>
+	<add as="Boolean Literal" template="booleanliteral" icon="images/symbols/small_event.gif"/>
+	<add as="Number Literal" template="numberliteral" icon="images/symbols/small_event.gif"/>
 	<!-- <add as="Event" template="hline" style="symbol;image=images/symbols/event.png" icon="images/symbols/small_event.gif"/>
 	<add as="Event (Intermediate)" template="task" style="symbol;image=images/symbols/event_intermediate.png" icon="images/symbols/small_event_intermediate.gif"/>
 	<add as="Event (End)" template="shape" style="symbol;image=images/symbols/event_end.png" icon="images/symbols/small_event_end.gif"/>

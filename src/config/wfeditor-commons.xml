@@ -108,7 +108,35 @@
 					<mxGeometry as="geometry" width="80" height="30"/>
 				</mxCell>
 			</Variable>
-		</add>		
+		</add>
+		<add as="enumliteral">
+			<EnumLiteral name="EnumLiteral" value="">
+				<mxCell vertex="1" style="literal">		
+					<mxGeometry as="geometry" width="50" height="50"/>
+				</mxCell>
+			</EnumLiteral>
+		</add>
+		<add as="stringliteral">
+			<StringLiteral name="StringLiteral" value="">
+				<mxCell vertex="1" style="literal">		
+					<mxGeometry as="geometry" width="50" height="50"/>
+				</mxCell>
+			</StringLiteral>
+		</add>
+		<add as="booleanliteral">
+			<BooleanLiteral name="BooleanLiteral" value="false">
+				<mxCell vertex="1" style="literal">		
+					<mxGeometry as="geometry" width="50" height="50"/>
+				</mxCell>
+			</BooleanLiteral>
+		</add>
+		<add as="numberliteral">
+			<NumberLiteral name="NumberLiteral" value="0">
+				<mxCell vertex="1" style="literal">		
+					<mxGeometry as="geometry" width="50" height="50"/>
+				</mxCell>
+			</NumberLiteral>
+		</add>
 	</Array>
 	<add as="createTasks">VWQLEditorConfig.createTasks</add>
 </mxEditor>

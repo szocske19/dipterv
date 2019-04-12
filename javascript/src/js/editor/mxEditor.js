@@ -2516,7 +2516,9 @@ mxEditor.prototype.createProperties = function (cell)
 		var attrs = value.attributes;
 		var texts = [];
 
-		var eClassifierNames = eCoreHandler.getEClassifierNames();
+		var eClassNames = eCoreHandler.getEClassNames();
+		var eEnumNames = eCoreHandler.getEEnumNames();
+		var eEnumLiteralNames = eCoreHandler.getEEnumLiteralNames();
 		
 		for (var i = 0; i < attrs.length; i++)
 		{
@@ -2524,13 +2526,13 @@ mxEditor.prototype.createProperties = function (cell)
 			// the cell label
 			if (attrs[i].nodeName.toLowerCase() === "type") {
 				var val = attrs[i].value;
-				texts[i] = form.addSingleCombo("type", eClassifierNames, val);
+				texts[i] = form.addSingleCombo("type", eClassNames, val);
 			} else if (attrs[i].nodeName.toLowerCase() === "edgetype") {
 				var sourceType = cell.source.value.getAttribute("type");
 				var allReferences;
 				if(sourceType) {
 					var eClassifier = eCoreHandler.getEClassifierByName(sourceType);
-					allReferences = eCoreHandler.getAllEReferencesOfClassifier(eClassifier);
+					allReferences = eCoreHandler.getAllEStructuralFeaturesOfClassifier(eClassifier);
 				} else {
 					allReferences = eCoreHandler.getAllEReferences();
 				}				
@@ -2538,6 +2540,21 @@ mxEditor.prototype.createProperties = function (cell)
 
 				var val = attrs[i].value;
 				texts[i] = form.addSingleCombo("edgetype", allReferencesNames, val);
+			} else if (attrs[i].nodeName.toLowerCase() === "value") {
+				var template = cell.value.nodeName.toLowerCase();
+				if(template === "enumliteral"){
+					var val = attrs[i].value;
+					texts[i] = form.addSingleCombo("value", eEnumLiteralNames, val);
+				} else if(template === "stringliteral"){
+					var val = attrs[i].value;
+					texts[i] = form.addText("value", val);
+				} else if(template === "booleanliteral"){
+					var val = attrs[i].value;
+					texts[i] = form.addCheckbox("value", val);
+				} else if(template === "numberliteral"){
+					var val = attrs[i].value;
+					texts[i] = form.addText("value", val, "number");
+				}
 			} else if (attrs[i].nodeName.toLowerCase() !== "id") {
 				var val = attrs[i].value;
 				texts[i] = form.addTextarea(attrs[i].nodeName, val,
@@ -2607,6 +2624,14 @@ mxEditor.prototype.createProperties = function (cell)
 						|| attrs[i].nodeName.toLowerCase() === "edgetype" ) {
 						var selection = texts[i].getElementsByClassName(attrs[i].nodeName)[0];
 						textValue = selection.options[selection.selectedIndex].value;
+					} else if (attrs[i].nodeName.toLowerCase() === "value") {
+						var template = cell.value.nodeName.toLowerCase();
+						if(template === "enumliteral") {
+							var selection = texts[i].getElementsByClassName(attrs[i].nodeName)[0];
+							textValue = selection.options[selection.selectedIndex].value;
+						} else if(template === "booleanliteral") {
+							textValue = texts[i].checked ? "true" : "false";
+						}
 					}
 					if (attrs[i].nodeName.toLowerCase() !== "id") {
 						var edit = new mxCellAttributeChange(
