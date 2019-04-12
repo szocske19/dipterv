@@ -18,6 +18,7 @@
 		<add as="67" control="1" action="copy"/>
 		<add as="86" control="1" action="paste"/>
 		<add as="71" control="1" action="group"/>
+		<add as="83" control="1" action="saveGraph"/>
 		<add as="85" control="1" action="ungroup"/>
 		<add as="113" action="edit"/>		
 		<add as="123" action="showProperties"/>
