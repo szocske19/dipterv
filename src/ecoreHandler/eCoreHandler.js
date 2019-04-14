@@ -8,16 +8,71 @@ var eCoreHandler = {
     },
  
     addECore(eCore) {
+        var eClassifier;
         for (var i = 0; i < eCore.value.eClassifiers.length; i++) {
             eCore.value.eClassifiers[i].package = eCore;
-            var eClassifier = eCore.value.eClassifiers[i];
+            eClassifier = eCore.value.eClassifiers[i];
             if (eClassifier.eStructuralFeatures) {
                 for (var j = 0; j < eClassifier.eStructuralFeatures.length; j++) {
-                    eClassifier.eStructuralFeatures[j].source = eClassifier;
+                    eClassifier.eStructuralFeatures[j].source = eClassifier;                    
                 }
             }
         }
         eCoreHandler.eCores.push(eCore);
+        for (var k = 0; k < eCore.value.eClassifiers.length; k++) {
+            eCore.value.eClassifiers[k].package = eCore;
+            eClassifier = eCore.value.eClassifiers[k];
+            eClassifier.superTypeRef = this.getAllSuperTypes(eClassifier);
+            if (!eClassifier.subTypesRef) {
+                eClassifier.subTypesRef = [];
+            }
+            for (var l = 0; l < eClassifier.superTypeRef.length; l++) {
+                var superType = eClassifier.superTypeRef[l];
+                if (!superType.subTypesRef) {
+                    superType.subTypesRef = [];
+                }
+                superType.subTypesRef.push(eClassifier);
+            }
+        }
+        this.calulateSubtypeLeafs();
+    },
+
+    calulateSubtypeLeafs() {
+        var eCore; var eClassifier;
+        for (var i = 0; i < eCoreHandler.eCores.length; i++) {
+            eCore = eCoreHandler.eCores[i].value;
+            for (var j = 0; j < eCore.eClassifiers.length; j++) {
+                eClassifier = eCore.eClassifiers[j];
+                eClassifier.subTypeLeafs = null;                
+            }
+        }
+        for (var k = 0; k < eCoreHandler.eCores.length; k++) {
+            eCore = eCoreHandler.eCores[k].value;
+            for (var l = 0; l < eCore.eClassifiers.length; l++) {
+                eClassifier = eCore.eClassifiers[l];
+                this.getSubtypeLeafs(eClassifier);           
+            }
+        }
+    },
+
+    getSubtypeLeafs(eClassifier) {
+        if (eClassifier.subTypeLeafs) {
+            return eClassifier.subTypeLeafs;
+        }
+        if (eClassifier.subTypesRef.length === 0) {
+            eClassifier.subTypeLeafs = [eClassifier];
+            return eClassifier.subTypeLeafs;      
+        }
+        var subTypeLeafs = [];
+        eClassifier.subTypesRef.forEach((subType) => {
+            subTypeLeafs = subTypeLeafs.concat(this.getSubtypeLeafs(subType));
+        });
+        eClassifier.subTypeLeafs = subTypeLeafs;
+        return subTypeLeafs;
+    },
+
+    haveCommonDescendant(eClassifier1, eClassifier2) {
+        return eClassifier1.subTypeLeafs.some(subType => eClassifier2.subTypeLeafs.includes(subType));
     },
 
     getEClassifiers(filterFunction) {
@@ -134,7 +189,7 @@ var eCoreHandler = {
 
     getAllEStructuralFeaturesOfClassifier(eClassifier, getFunction = eCoreHandler.getEStructuralFeatures) {
         var allEReferences = [];
-        var eClassifiers = eCoreHandler.getAllSuperTypes(eClassifier);
+        var eClassifiers = eClassifier.superTypeRef.slice();
         eClassifiers.push(eClassifier);
         if (eClassifiers) {
             for (var i = 0; i < eClassifiers.length; i++) {
@@ -172,6 +227,6 @@ var eCoreHandler = {
 
     getEReferencesFullName(eReferences) {
         return eReferences.map(eReference => `${eReference.source.name}::${eReference.name}`);
-    },
+    }
 
 };

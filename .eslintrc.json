@@ -1,5 +1,7 @@
 {
-    "extends": "airbnb-base",
+    "extends": [
+        "airbnb-base"
+    ],
     "plugins": [
         "import",        
         "html"
@@ -24,7 +26,10 @@
         "prefer-destructuring": "off",
         "no-loop-func": "off",
         "max-len": "off",
-        "no-param-reassign": "off"
-
+        "no-param-reassign": "off",
+        "comma-dangle": ["error", "never"],
+        "no-restricted-syntax": "off",
+        "guard-for-in": "off",
+        "new-cap":"off"
     }
 }

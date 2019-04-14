@@ -26,18 +26,18 @@ class VWQLGraphConfig {
 
     static getTooltipForCell(cell) {
         var href = cell.getAttribute('href');
-        href = (href != null && href.length > 0) ?
-            `<br>${href}` : '';
+        href = (href != null && href.length > 0)
+            ? `<br>${href}` : '';
         var maxlen = 30;
         var desc = cell.getAttribute('description');
         if (desc == null || desc.length == 0) {
             desc = '';
         }
         else if (desc.length < maxlen) {
-            desc = '<br>' + desc;
+            desc = `<br>${desc}`;
         }
         else {
-            desc = '<br>' + desc.substring(0, maxlen) + '...';
+            desc = `<br>${desc.substring(0, maxlen)}...`;
         }
         return `<b>${cell.getAttribute('label')
             }</b> (${cell.getId()})${href}${desc
@@ -78,7 +78,7 @@ class VWQLGraphConfig {
             type = cell.value.getAttribute('type');
             nameTags = eCoreHandler.separatedNameTags(type);
             if (nameTags.length === 2) {
-                return `${nameTags[1]}\n${label}`;
+                return `<<${nameTags[1]}>>\n${label}`;
             }
             return `${label}`;
         }
