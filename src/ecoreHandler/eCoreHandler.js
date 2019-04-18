@@ -230,6 +230,9 @@ var eCoreHandler = {
             case "EClassifier": return true;
             case "EStructuralFeature": return true;
             case "EFeatureMapEntry": return true;
+            case "EDataType": return true;
+            case "EStringToStringMapEntry": return true;
+            
             //TODO examine whether this is all variables (ecore.ecore)
             default: return false;
         }

@@ -2,7 +2,7 @@
 	helpWindowImage="images/help.gif"
 	tasksWindowImage="images/tasks.gif"
 	forcedInserting="0"
-	swimlaneRequired="0">
+	swimlaneRequired="1">
 	<include name="config/editor-commons.xml"/>
 	<Array as="cycleAttributeValues">
 		<add value="#83027F"/>

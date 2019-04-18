@@ -8,6 +8,7 @@
 	<add as="getTooltipForCell">VWQLGraphConfig.getTooltipForCell</add>
 	<add as="convertValueToString">VWQLGraphConfig.convertValueToString</add>
 	<add as="getFirstUnusedName">VWQLGraphConfig.getFirstUnusedName</add>	
+	<add as="swimlaneNesting">false</add>	
 	<mxGraphModel as="model">
 		<add as="valueForCellChanged">VWQLGraphConfig.valueForCellChanged</add>
 		<root>

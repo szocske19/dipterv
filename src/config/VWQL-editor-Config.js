@@ -188,8 +188,19 @@ class VWQLEditorConfig {
             case "patterncomposition":
                 return this.isInTheList(["patternbody"], parentName);
 
+            case "variable":
+                return this.isInTheList(["patternbody"], parentName);
+            case "enumliteral":
+                return this.isInTheList(["patternbody"], parentName);
+            case "stringliteral":
+                return this.isInTheList(["patternbody"], parentName);
+            case "booleanliteral":
+                return this.isInTheList(["patternbody"], parentName);
+            case "numberliteral":
+                return this.isInTheList(["patternbody"], parentName);
+                
             default:
-                return true;
+                return false;
         }
     }
 
