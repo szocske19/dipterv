@@ -57,6 +57,10 @@ class Vwqlvalidation {
 		for (i = 0; i < edges.length; i++) {
 			this.edgeValidation(edges[i]);
 		}
+		var pathExpressions = VwqlUtils.getElements(this.graph, pattern, "pathexpression");
+		for (i = 0; i < pathExpressions.length; i++) {
+			this.pathExpressionValidation(pathExpressions[i]);
+		}
 	}
 
 	static uniquePatternName(patterns) {
@@ -109,5 +113,65 @@ class Vwqlvalidation {
 				);
 			}
 		}
+	}
+
+	static pathExpressionValidation(edge) {
+		var template = edge.target.value.nodeName.toLowerCase();
+		var sourceType = edge.source.value.getAttribute("type");
+		if (sourceType) {
+			var sourceClassifier = eCoreHandler.getEClassifierByName(sourceType);
+			var allReferences = eCoreHandler.getAllEStructuralFeaturesOfClassifier(sourceClassifier);
+			var edgeTypeName = edge.value.getAttribute("edgeType");
+			var reference = allReferences.find(reference => eCoreHandler.getEReferenceFullName(reference) === edgeTypeName);
+
+			if (!reference) {
+				this.createValidationOverlay(
+					edge,
+					this.graph.errorImage,
+					`<b>${eCoreHandler.getEClassifierFullName(sourceClassifier)}</b> does not have structuralfeature with "<b>${edgeTypeName}</b>" name.`
+				);
+			} else if (template === "variable") {
+				var targetType = edge.target.value.getAttribute("type");
+				if (targetType) {
+					var targetClassifier = eCoreHandler.getEClassifierByName(targetType);
+					if (!eCoreHandler.haveCommonDescendant(targetClassifier, reference.eTypeRef)) {
+						this.createValidationOverlay(
+							edge,
+							this.graph.errorImage,
+							`<b>${eCoreHandler.getEClassifierFullName(targetClassifier)}</b> does not fit as target to the <b>${edgeTypeName}</b> feature .`
+						);
+					}
+				}
+			} else if (template === "enumliteral"
+				|| template === "stringliteral"
+				|| template === "booleanliteral"
+				|| template === "numberliteral") {
+
+					if (eCoreHandler.isPrimitivType(reference.eTypeRef)) {
+						var isPorperType = false;
+						switch (template) {
+							case "stringliteral": isPorperType = eCoreHandler.getEStringTypeNames().indexOf(reference.eTypeRef) >= 0; break;
+							case "booleanliteral": isPorperType = eCoreHandler.getENumberTypeNames().indexOf(reference.eTypeRef) >= 0; break;
+							case "numberliteral": isPorperType = eCoreHandler.getEBooleanTypeNames().indexOf(reference.eTypeRef) >= 0; break;
+							
+							default: isPorperType = false;
+						}
+						if (!isPorperType) {
+							this.createValidationOverlay(
+								edge,
+								this.graph.errorImage,
+								`The lieteral does not fit as target to the <b>${edgeTypeName}</b> feature .`
+							);
+						}
+					} else {
+						this.createValidationOverlay(
+							edge,
+							this.graph.errorImage,
+							`The lieteral does not fit as target to the <b>${edgeTypeName}</b> feature .`
+						);
+					}
+			}
+		}
+
 	}
 }
