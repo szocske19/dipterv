@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="EcoreSimpleTypes" nsURI="http://www.eclipse.org/emf/2002/Ecore"
+    nsPrefix="ecore">	
+	<eClassifiers xsi:type="ecore:EClass" name="EBigDecimal"/>
+	<eClassifiers xsi:type="ecore:EClass" name="EBigInteger"/>
+	<eClassifiers xsi:type="ecore:EClass" name="EByte"/>
+	<eClassifiers xsi:type="ecore:EClass" name="EByteArray"/>
+	<eClassifiers xsi:type="ecore:EClass" name="EDouble"/>
+	<eClassifiers xsi:type="ecore:EClass" name="EString"/>
+	<eClassifiers xsi:type="ecore:EClass" name="EFloat"/>
+	<eClassifiers xsi:type="ecore:EClass" name="ELong"/>
+	<eClassifiers xsi:type="ecore:EClass" name="EShort"/>
+	<eClassifiers xsi:type="ecore:EClass" name="EBoolean"/>
+	<eClassifiers xsi:type="ecore:EClass" name="EBooleanObject"/>
+	<eClassifiers xsi:type="ecore:EClass" name="EByteObject"/>
+	<eClassifiers xsi:type="ecore:EClass" name="ECharacterObject"/>
+	<eClassifiers xsi:type="ecore:EClass" name="EDate"/>
+	<eClassifiers xsi:type="ecore:EClass" name="EDiagnosticChain"/>
+	<eClassifiers xsi:type="ecore:EClass" name="EEList"/>
+	<eClassifiers xsi:type="ecore:EClass" name="EInt"/>
+	<eClassifiers xsi:type="ecore:EClass" name="EEnumLiteral"/>
+	<eClassifiers xsi:type="ecore:EClass" name="EPackage"/>
+	<eClassifiers xsi:type="ecore:EClass" name="EClassifier"/>
+	<eClassifiers xsi:type="ecore:EClass" name="EStructuralFeature"/>
+	<eClassifiers xsi:type="ecore:EClass" name="EFeatureMapEntry"/>
+	<eClassifiers xsi:type="ecore:EClass" name="EDataType"/>
+	<eClassifiers xsi:type="ecore:EClass" name="EStringToStringMapEntry"/>
+</ecore:EPackage>
