@@ -78,7 +78,7 @@ class VWQLGraphConfig {
             type = cell.value.getAttribute('type');
             nameTags = eCoreHandler.separatedNameTags(type);
             if (nameTags.length === 2) {
-                return `<<${nameTags[1]}>>\n${label}`;
+                return `${nameTags[1]}\n${label}`;
             }
             return `${label}`;
         }

@@ -52,29 +52,104 @@ class VqlGenerator {
     }
 
     static patternBodyCode(body) {
-        var name = body.value.getAttribute("name");   
+        var i;
+        var element;
+        
+        var variablesCode = [];
+        var variables = VwqlUtils.getElements(this.graph, body, "variable");
+        for (i = 0; i < variables.length; i++) {
+            var type = this.getTypeCode(variables[i]);
+            element = `${type}(${this.expressionCode(variables[i])});`;
+            variablesCode.push(this.wrapperWithSpan("variable", variables[i].id, element));
+        }
 
-        var element = `<<<<valami>>>>`;
+        var pathexpressionCode = [];
+        var pathexpressions = VwqlUtils.getElements(this.graph, body, "pathexpression");
+        for (i = 0; i < pathexpressions.length; i++) {
+            element = this.pathexpressionCode(pathexpressions[i]);
+            pathexpressionCode.push(this.wrapperWithSpan("pathexpression", pathexpressions[i].id, element));
+        }
+        
+        var bodyContent = variablesCode.join(`<br>${this.INDENTATION_START}`);
+        bodyContent = bodyContent.concat(`<br>${this.INDENTATION_START}`);
+        bodyContent = bodyContent.concat(pathexpressionCode.join(`<br>${this.INDENTATION_START}`));
 
-        return `${this.INDENTATION_START + this.wrapperWithSpan("patternbody", body.id, element)} <br>`;
+        return `${this.INDENTATION_START + this.wrapperWithSpan("patternbody", body.id, bodyContent)} <br>`;
     }
 
     static parameterListCode(graphPattern) {
-        var parametes = [];
+        var parametersCode = [];
 
         var parameters = VwqlUtils.getElements(this.graph, graphPattern, "parameter");
         for (var i = 0; i < parameters.length; i++) {
-            var type = parameters[i].value.getAttribute("type");
+            var type = this.getTypeCode(parameters[i]);
             var name = parameters[i].value.getAttribute("name");        
             var element = `${type}: ${name}`;
-            parametes.push(this.wrapperWithSpan("parameter", parameters[i].id, element));                
+            parametersCode.push(this.wrapperWithSpan("parameter", parameters[i].id, element));                
         }
 
-        return parametes.join(", ");
+        return parametersCode.join(", ");
     }
 
     static wrapperWithSpan(cls, id, element) {
         return `<span class="${cls}" refId="${id}">${element}</span>`;
+    }
+
+    static expressionCode(exp) {
+        if (exp === null) {
+            return `${this.errorCode("Undeclared expression")}`;
+        }
+        var template = exp.value.nodeName.toLowerCase();
+        switch (template) {
+            case "variable": return `${exp.value.getAttribute("name")}`;
+            default: return `${this.errorCode("Undeclared expression")}`;
+        }
+    }
+
+    static errorCode(description) {
+        return `[[[[${description}]]]]`;
+    }
+
+    static getTypeCode(cell) {
+        var type = cell.value.getAttribute("type");
+        var eClassifier = eCoreHandler.getEClassifierByName(type);
+        if (eClassifier.package.value.nsPrefix === "ecore") {
+            return `java ${eClassifier.name}`;
+        }
+        return `${type}`;
+    }
+
+    static constraintCode(constraint) {
+        var template = constraint.value.nodeName.toLowerCase();
+        var element;
+        if (!Vwqlvalidation.isValideCell(constraint)) {
+            element = `${this.errorCode("Invalid element")}`;
+            return this.wrapperWithSpan(template, constraint.id, element);
+        }
+
+        switch (template) {
+            case "pathexpression":
+           
+            element = this.pathexpressionCode(constraint); break;
+            default: 
+            element = "asd";
+        }
+
+        return this.wrapperWithSpan(template, constraint.id, element);
+    }
+
+    static pathexpressionCode(pathexpression) {
+        if (!Vwqlvalidation.isValideCell(pathexpression)) {
+            return `${this.errorCode("Invalid element")}`;
+        }
+        var sourceType = pathexpression.source.value.getAttribute("type");
+        var sourceClassifier = eCoreHandler.getEClassifierByName(sourceType);
+        var allReferences = eCoreHandler.getAllEStructuralFeaturesOfClassifier(sourceClassifier);
+        var edgeTypeName = pathexpression.value.getAttribute("edgeType");
+        var reference = allReferences.find(reference => eCoreHandler.getEReferenceFullName(reference) === edgeTypeName);
+        var source = pathexpression.source.value.getAttribute("name");
+        var target = pathexpression.target.value.getAttribute("name");
+        return `${sourceType}.${reference.name}(${source},${target});`;
     }
 }
 
