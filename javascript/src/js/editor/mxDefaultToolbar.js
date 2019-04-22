@@ -379,6 +379,8 @@ mxDefaultToolbar.prototype.drop = function(vertex, evt, target)
 		
 		this.insert(vertex, evt, target);
 
+		target = vertex.parent;
+
 		model.beginUpdate();
 		var usedNames = [];
 
