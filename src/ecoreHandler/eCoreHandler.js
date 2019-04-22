@@ -87,7 +87,7 @@ var eCoreHandler = {
 
     haveCommonDescendant(eClassifier1, eClassifier2) {
         if (typeof eClassifier1 === "string" || typeof eClassifier2 === "string") {
-            return false;
+            return eClassifier1 === eClassifier2;
         }
         return eClassifier1.subTypeLeafs.some(subType => eClassifier2.subTypeLeafs.includes(subType));
     },
@@ -186,16 +186,22 @@ var eCoreHandler = {
     },
 
     stringRefToRealRef(eClassifier, stringRef) {
-        // TODO handle cross reference
-        var nsPrefix = eClassifier.package.value.nsPrefix;
         var stringTags = stringRef.split('#//');
 
         if (stringTags.length === 2) {
-            if (this.isPrimitivType(stringTags[1])) {
-                return stringTags[1];
+            var nsURIs = stringTags[0].split(" ");
+            var nsURI = "";
+            if (nsURIs.length === 2) {
+                nsURI = nsURIs[1];
+            } else if (nsURIs.length === 1) {
+                if (nsURIs[0] === "") {
+                    nsURI = eClassifier.package.value.nsURI;
+                } else {
+                    nsURI = nsURIs[0];
+                }
             }
             for (var i = 0; i < eCoreHandler.eCores.length; i++) {
-                if (nsPrefix === eCoreHandler.eCores[i].value.nsPrefix) {
+                if (nsURI === eCoreHandler.eCores[i].value.nsURI) {
                     var eClassifiers = eCoreHandler.eCores[i].value.eClassifiers;
                     return eClassifiers.find(o => o.name === stringTags[1]);
                 }                
@@ -233,7 +239,7 @@ var eCoreHandler = {
             case "EDataType": return true;
             case "EStringToStringMapEntry": return true;
             
-            //TODO examine whether this is all variables (ecore.ecore)
+            // TODO examine whether this is all variables (ecore.ecore)
             default: return false;
         }
     },
@@ -272,19 +278,23 @@ var eCoreHandler = {
     },
 
     getAllEStructuralFeaturesOfClassifier(eClassifier, getFunction = eCoreHandler.getEStructuralFeatures) {
-        var allEReferences = [];
-        var eClassifiers = eClassifier.superTypeRef.slice();
-        eClassifiers.push(eClassifier);
-        if (eClassifiers) {
-            for (var i = 0; i < eClassifiers.length; i++) {
-                if (eClassifiers[i]) {
-                    var eReferences = getFunction(eClassifiers[i]);
-                    allEReferences = allEReferences.concat(eReferences);
+        if (eClassifier.superTypeRef) {
+            var allEReferences = [];
+            var superClassifiers = eClassifier.superTypeRef.slice();
+            if (superClassifiers) {
+                for (var i = 0; i < superClassifiers.length; i++) {
+                    if (superClassifiers[i]) {                        
+                        var superReferences = this.getAllEStructuralFeaturesOfClassifier(superClassifiers[i], getFunction);
+                        allEReferences = allEReferences.concat(superReferences);
+                    }
                 }
             }
-        }
+            var eReferences = getFunction(eClassifier);
+            allEReferences = allEReferences.concat(eReferences);
 
-        return allEReferences;
+            return allEReferences;
+        } 
+        return [];
     },
 
     getAllEReferencesOfClassifier(eClassifier) {
@@ -318,6 +328,9 @@ var eCoreHandler = {
     },
 
     getEClassifierFullName(eClassifier) {
+        if (typeof eClassifier === "string") {
+            return eClassifier;
+        }
         return `${eClassifier.package.value.nsPrefix}::${eClassifier.name}`;
     }
 
