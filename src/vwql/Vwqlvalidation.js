@@ -82,6 +82,10 @@ class Vwqlvalidation {
 			for (i = 0; i < pathExpressions.length; i++) {
 				this.pathExpressionValidation(pathExpressions[i]);
 			}
+			var variables = VwqlUtils.getElements(this.graph, patternbodies[j], "variable");
+			for (i = 0; i < variables.length; i++) {
+				this.variableValidation(variables[i]);
+			}
 		}
 	}
 
@@ -119,6 +123,36 @@ class Vwqlvalidation {
 				`error`
 			);
 		}
+		var Classifier = eCoreHandler.getEClassifierByName(type);
+		if (!Classifier) {
+			this.createValidationOverlay(
+				parameter,
+				this.graph.errorImage,
+				`Parameter's type is invalid.`,
+				`error`
+			);
+		}
+	}
+
+	static variableValidation(varibale) {
+		var type = varibale.value.getAttribute("type");
+		if (type === undefined || type === "") {
+			this.createValidationOverlay(
+				varibale,
+				this.graph.errorImage,
+				`Varibale's type is undefined.`,
+				`error`
+			);
+		}
+		var Classifier = eCoreHandler.getEClassifierByName(type);
+		if (!Classifier) {
+			this.createValidationOverlay(
+				varibale,
+				this.graph.errorImage,
+				`Varibale's type is invalid.`,
+				`error`
+			);
+		}
 	}
 
 	static edgeValidation(edge) {
@@ -127,15 +161,17 @@ class Vwqlvalidation {
 		if (sourceType && targetType) {
 			var targetClassifier = eCoreHandler.getEClassifierByName(targetType);
 			var sourceClassifier = eCoreHandler.getEClassifierByName(sourceType);
-			if (
-				!eCoreHandler.haveCommonDescendant(sourceClassifier, targetClassifier)
-			) {
-				this.createValidationOverlay(
-					edge,
-					this.graph.errorImage,
-					`Types have not got common descendant.`,
-					`error`
-				);
+			if (targetClassifier && sourceClassifier) {
+				if (
+					!eCoreHandler.haveCommonDescendant(sourceClassifier, targetClassifier)
+				) {
+					this.createValidationOverlay(
+						edge,
+						this.graph.errorImage,
+						`Types have not got common descendant.`,
+						`error`
+					);
+				}
 			}
 		}
 	}
@@ -143,7 +179,7 @@ class Vwqlvalidation {
 	static pathExpressionValidation(edge) {
 		var template = edge.target.value.nodeName.toLowerCase();
 		var sourceType = edge.source.value.getAttribute("type");
-		if (sourceType) {
+		if (this.isValideCell(edge.target) && this.isValideCell(edge.source) && sourceType) {
 			var sourceClassifier = eCoreHandler.getEClassifierByName(sourceType);
 			var allReferences = eCoreHandler.getAllEStructuralFeaturesOfClassifier(sourceClassifier);
 			var edgeTypeName = edge.value.getAttribute("edgeType");

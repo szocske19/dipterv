@@ -111,6 +111,10 @@ class VqlGenerator {
     }
 
     static getTypeCode(cell) {
+        var invalidCellCode = this.getInvalidCellCode(cell);
+        if (invalidCellCode.length !== 0) {
+            return invalidCellCode;
+        }
         var type = cell.value.getAttribute("type");
         var eClassifier = eCoreHandler.getEClassifierByName(type);
         if (eClassifier.package.value.nsPrefix === "ecore") {
@@ -120,11 +124,9 @@ class VqlGenerator {
     }
 
     static constraintCode(constraint) {
-        var template = constraint.value.nodeName.toLowerCase();
-        var element;
-        if (!Vwqlvalidation.isValideCell(constraint)) {
-            element = `${this.errorCode("Invalid element")}`;
-            return this.wrapperWithSpan(template, constraint.id, element);
+        var invalidCellCode = this.getInvalidCellCode();
+        if (invalidCellCode.length !== 0) {
+            return invalidCellCode;
         }
 
         switch (template) {
@@ -139,8 +141,9 @@ class VqlGenerator {
     }
 
     static pathexpressionCode(pathexpression) {
-        if (!Vwqlvalidation.isValideCell(pathexpression)) {
-            return `${this.errorCode("Invalid element")}`;
+        var invalidCellCode = this.getInvalidCellCode(pathexpression);
+        if (invalidCellCode.length !== 0) {
+            return invalidCellCode;
         }
         var sourceType = pathexpression.source.value.getAttribute("type");
         var sourceClassifier = eCoreHandler.getEClassifierByName(sourceType);
@@ -150,6 +153,16 @@ class VqlGenerator {
         var source = pathexpression.source.value.getAttribute("name");
         var target = pathexpression.target.value.getAttribute("name");
         return `${sourceType}.${reference.name}(${source},${target});`;
+    }
+
+    static getInvalidCellCode(cell) {
+        var template = cell.value.nodeName.toLowerCase();
+        if (!Vwqlvalidation.isValideCell(cell)) {
+            var element = `${this.errorCode("Invalid element")}`;
+            return this.wrapperWithSpan(template, cell.id, element);
+        }
+
+        return "";
     }
 }
 
