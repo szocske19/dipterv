@@ -2,9 +2,7 @@
   <root>
     <VWQL name="First VWQL" packageName="my.first.vwql" id="0">
       <Array as="emfPackages">
-        <add value="org.eclipse.emf.ecore.EClass"/>
-        <add value="org.eclipse.emf.ecore.EPackage"/>
-        <add value="a"/>
+        <add value="http://org.eclipse.viatra/model/cps"/>
       </Array>
       <mxCell/>
     </VWQL>

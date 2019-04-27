@@ -72,3 +72,7 @@ changesLost=All changes will be lost!
 swimlanes=Swimlanes
 travelBooking=Travel Booking
 notAvailable=Not available
+firstexample=First example
+firstexampleheavy=First heavy example
+secondexample=Second example
+thirdexample=Third example

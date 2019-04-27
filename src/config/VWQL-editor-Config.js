@@ -3,7 +3,7 @@ class VWQLEditorConfig {
         // Disables removing cells from parents
         this.graph.graphHandler.setRemoveCellsFromParent(false);
         this.showTasks();
-        var graph = this["graph"];
+        var graph = this.graph;
         var model = graph.getModel();
 
         this.graph.graphHandler.moveCells = function(cells, dx, dy, clone, target, evt) {
@@ -85,7 +85,7 @@ class VWQLEditorConfig {
             var cellName = VWQLEditorConfig.getCellName(vertex);
             return !VWQLEditorConfig.isInTheList(["patternbody"], cellName);
             // return !graph.isSameTamplate(vertex, "patternbody");
-        }
+        };
         
         // Keeps the lanes and pools stacked
         var layoutMgr = new mxLayoutManager(graph);
@@ -235,7 +235,7 @@ class VWQLEditorConfig {
         var xml = mxUtils.getPrettyXml(node);
 
         var pom = document.createElement('a');
-        pom.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(xml));
+        pom.setAttribute('href', `data:text/plain;charset=utf-8,${encodeURIComponent(xml)}`);
         pom.setAttribute('download', vwqlName);
 
         if (document.createEvent) {
@@ -406,7 +406,7 @@ class VWQLEditorConfig {
     }
 
     static defaultConnect(editor) {
-        editor.defaultEdge = editor.templates["edge"];
+        editor.defaultEdge = editor.templates.edge;
         
         if (editor.defaultEdge != null) {
             editor.defaultEdge.style = null;
@@ -414,7 +414,7 @@ class VWQLEditorConfig {
     }
 
     static straightConnect(editor) {
-        editor.defaultEdge = editor.templates["edge"];
+        editor.defaultEdge = editor.templates.edge;
 
         if (editor.defaultEdge != null) {
             editor.defaultEdge.style = 'straightEdge';
@@ -422,7 +422,11 @@ class VWQLEditorConfig {
     }
 
     static pathExpressionConnect(editor) {
-        editor.defaultEdge = editor.templates["pathexpression"];
+        editor.defaultEdge = editor.templates.pathexpression;
+    }
+
+    static compareConnect(editor) {
+        editor.defaultEdge = editor.templates.compare;
     }
 
     static createTasks(div) {
@@ -431,20 +435,29 @@ class VWQLEditorConfig {
         if (this.graph != null)
         {
             var layer = this.graph.model.root.getChildAt(0);
-            mxUtils.para(div,  mxResources.get('examples'));
+            mxUtils.para(div, mxResources.get('examples'));
             mxUtils.linkInvoke(div, mxResources.get('newDiagram'), this,
                 'open', 'diagrams/empty.xml', off);
             mxUtils.br(div);
-            mxUtils.linkInvoke(div, mxResources.get('swimlanes'), this,
-                'open', 'diagrams/FirstVWQL.xml', off);
+            mxUtils.linkInvoke(div, mxResources.get('firstexample'), this,
+            'open', 'diagrams/FirstVWQL.xml', off);
+            mxUtils.br(div);
+            mxUtils.linkInvoke(div, mxResources.get('firstexampleheavy'), this,
+                'open', 'diagrams/First VWQL_heavy.xml', off);
+            mxUtils.br(div);
+            mxUtils.linkInvoke(div, mxResources.get('secondexample'), this,
+                'open', 'diagrams/Second VWQL.xml', off);
+            mxUtils.br(div);
+            mxUtils.linkInvoke(div, mxResources.get('thirdexample'), this,
+                'open', 'diagrams/Third VWQL.xml', off);
             mxUtils.br(div);
             
             if (!this.graph.isSelectionEmpty())
             {
                 var cell = this.graph.getSelectionCell();
-                if (this.graph.getSelectionCount() == 1 &&
-                    (this.graph.model.isVertex(cell) &&
-                    cell.getEdgeCount() > 0) || this.graph.isSwimlane(cell))
+                if (this.graph.getSelectionCount() == 1
+                    && (this.graph.model.isVertex(cell)
+                    && cell.getEdgeCount() > 0) || this.graph.isSwimlane(cell))
                 {
                     mxUtils.para(div, 'Layout');
                     mxUtils.linkAction(div, mxResources.get('verticalTree'),
@@ -468,9 +481,9 @@ class VWQLEditorConfig {
                     mxUtils.linkAction(div, mxResources.get('opacity'),
                         this, 'opacity', off);
                     mxUtils.br(div);
-                    if (this.graph.model.isVertex(cell) ||
-                        (cell.style != null && 
-                        cell.style.indexOf("arrowEdge") >= 0))
+                    if (this.graph.model.isVertex(cell)
+                        || (cell.style != null 
+                        && cell.style.indexOf("arrowEdge") >= 0))
                     {
                         mxUtils.linkAction(div, mxResources.get('gradientColor'),
                             this, 'gradientColor', off);

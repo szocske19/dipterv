@@ -95,10 +95,6 @@
 			}
 			else
 			{
-				generateECore("config/ecoreTypes.ecore");
-				generateECore("config/cps.ecore");
-				generateECore("config/GraphicalPatternLanguage.ecore");
-				generateECore("config/XMLType.ecore");
 				var editor = createEditor('config/workfloweditor.xml');
 				var graph = editor.graph
 
@@ -143,26 +139,6 @@
 				VqlViewerWindow.setVisible(true);
 			}
 		}
-		
-		function generateECore(xsd) {       
-        // First we construct a Jsonix context - a factory for unmarshaller (parser)
-        // and marshaller (serializer)
-        var context = new Jsonix.Context([ecore]);
-
-        // Then we create a unmarshaller
-				var unmarshaller = context.createUnmarshaller();
-
-        // Unmarshal an object from the XML retrieved from the URL
-        return unmarshaller.unmarshalURL(xsd,
-					// This callback function will be provided with the result
-					// of the unmarshalling
-					(unmarshalled) => {
-							// var unmarshalledJS = document.getElementById('unmarshalledJS');
-							// unmarshalledJS.innerHTML = JSON.stringify(unmarshalled, null, 2);
-
-							eCoreHandler.addECore(unmarshalled);
-					});
-    }
 	</script>
 	<script>
 		function syntaxHighlight(json) {
