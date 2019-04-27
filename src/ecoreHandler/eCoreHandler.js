@@ -1,6 +1,61 @@
 var eCoreHandler = {
 
     eCores: [],
+    knownEcores: {
+		"config/ecoreTypes.ecore": "http://www.eclipse.org/emf/2002/Ecore",
+		"config/cps.ecore": "http://org.eclipse.viatra/model/cps",
+		"config/GraphicalPatternLanguage.ecore": "http://www.eclipse.org/viatra/query/patternlanguage/emf/GraphPatternLanguage",
+		"config/XMLType.ecore": "http://www.eclipse.org/emf/2003/XMLType"
+    },
+    
+    updateEcores(graph, root) {
+        var elements = root.value.getElementsByTagName("Array");
+        if (elements) {
+            var emfPackages = [...elements].find(element => element.getAttribute("as") === "emfPackages");
+            if (emfPackages) {
+                for (var i = 0; i < emfPackages.children.length; i++) {
+                    eCoreHandler.generateECoreFromNsURI(graph, emfPackages.children[i].getAttribute("value"));
+                }
+            }
+        }
+    },
+
+    generateECoreFromNsURI(graph, nsURI) {
+        var eCore = eCoreHandler.getEcoreByNsURI(nsURI);
+        if (eCore) {
+            eCoreHandler.generateECore(graph, eCore);
+        }
+    },
+
+
+	getKnownEcores() {
+		return Object.values(eCoreHandler.knownEcores);
+    },
+    
+    getEcoreByNsURI(nsUri) {
+        return Object.keys(eCoreHandler.knownEcores).find(key => eCoreHandler.knownEcores[key] === nsUri);
+    },
+    
+    addECoreECore(graph) {
+        eCoreHandler.generateECore(graph, Object.keys(eCoreHandler.knownEcores)[0]);
+    },
+
+    generateECore(graph, xsd) {       
+        // First we construct a Jsonix context - a factory for unmarshaller (parser)
+        // and marshaller (serializer)
+        var context = new Jsonix.Context([ecore]);
+
+        // Then we create a unmarshaller
+        var unmarshaller = context.createUnmarshaller();
+        var ready = false;
+        unmarshaller.unmarshalURL(xsd,
+            // This callback function will be provided with the result
+            // of the unmarshalling
+            (unmarshalled) => {                    
+                    eCoreHandler.addECore(unmarshalled);
+                    Vwqlvalidation.validate(graph);
+            });     
+    },
 
 
     getECores() {
@@ -42,13 +97,17 @@ var eCoreHandler = {
                     if (eStructuralFeature.eType) {
                         eStructuralFeature.eTypeRef = this.stringRefToRealRef(eClassifier, eStructuralFeature.eType);
                         if (eStructuralFeature.eTypeRef === undefined) {
-                            console.log("Can't find reference");
+                            console.log(`Can't find reference. Feature: ${eStructuralFeature.name}, Type: ${eStructuralFeature.eType}`);
                         }
                     }
                 }
             }
         }
         this.calulateSubtypeLeafs();
+    },
+
+    removeEcores() {
+        eCoreHandler.eCores = [];
     },
 
     calulateSubtypeLeafs() {
@@ -86,6 +145,9 @@ var eCoreHandler = {
     },
 
     haveCommonDescendant(eClassifier1, eClassifier2) {
+        if (!eClassifier1 || !eClassifier2) {
+            return false;
+        }
         if (typeof eClassifier1 === "string" || typeof eClassifier2 === "string") {
             return eClassifier1 === eClassifier2;
         }
@@ -278,7 +340,7 @@ var eCoreHandler = {
     },
 
     getAllEStructuralFeaturesOfClassifier(eClassifier, getFunction = eCoreHandler.getEStructuralFeatures) {
-        if (eClassifier.superTypeRef) {
+        if (eClassifier && eClassifier.superTypeRef) {
             var allEReferences = [];
             var superClassifiers = eClassifier.superTypeRef.slice();
             if (superClassifiers) {
@@ -328,6 +390,9 @@ var eCoreHandler = {
     },
 
     getEClassifierFullName(eClassifier) {
+        if (!eClassifier) {
+            return "";
+        }
         if (typeof eClassifier === "string") {
             return eClassifier;
         }

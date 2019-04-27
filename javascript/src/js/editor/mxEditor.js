@@ -2571,8 +2571,7 @@ mxEditor.prototype.createProperties = function (cell)
 			{
 				var listName = arrayChildren[i].getAttribute("as");
 				var values = mxUtils.getAllValueOfElementsofArray(arrayChildren[i]);
-				arraySelect.push(form.addMultiCombo(listName, defaultArray, values));
-					
+				arraySelect.push(form.addMultiCombo(listName, eCoreHandler.getKnownEcores(), values));
 			}
 		}
 
@@ -2617,6 +2616,7 @@ mxEditor.prototype.createProperties = function (cell)
 				// attribute and executes it using the
 				// model, which will also make the change
 				// part of the current transaction
+				var template = cell.value.nodeName.toLowerCase();
 				for (var i=0; i<attrs.length; i++)
 				{
 					var textValue = texts[i].value
@@ -2625,7 +2625,6 @@ mxEditor.prototype.createProperties = function (cell)
 						var selection = texts[i].getElementsByClassName(attrs[i].nodeName)[0];
 						textValue = selection.options[selection.selectedIndex].value;
 					} else if (attrs[i].nodeName.toLowerCase() === "value") {
-						var template = cell.value.nodeName.toLowerCase();
 						if(template === "enumliteral") {
 							var selection = texts[i].getElementsByClassName(attrs[i].nodeName)[0];
 							textValue = selection.options[selection.selectedIndex].value;
@@ -2640,32 +2639,35 @@ mxEditor.prototype.createProperties = function (cell)
 						model.execute(edit);
 					}
 				}
+				if(template === "vwql"){
+					eCoreHandler.removeEcores();
+					eCoreHandler.addECoreECore(this.graph);
+					for (var i=0; i<arrayChildren.length; i++)
+					{
+						if (arrayChildren[i].nodeName.toLowerCase() !== "id") {
 
-				for (var i=0; i<arrayChildren.length; i++)
-				{
-					if (arrayChildren[i].nodeName.toLowerCase() !== "id") {
+							while(arrayChildren[i].children.length >0){
+								arrayChildren[i].children[0].remove()
+							}
+							var listName = arrayChildren[i].getAttribute("as");
+							var selections = arraySelect[i].getElementsByClassName(listName);
+							if(selections != null){	
+								for (var i = 0; i < selections.length; i += 1)
+								{
+									var selectedOption = selections[i].options[selections[i].selectedIndex];
+									if(selectedOption.label !== "invalid") {
+										var doc = value.ownerDocument;
+										var addElement = doc.createElement("add");
+										addElement.setAttribute("value", selectedOption.value);
 
-						while(arrayChildren[i].children.length >0){
-							arrayChildren[i].children[0].remove()
-						}
+										arrayChildren[0].appendChild(addElement);
 
-
-						var listName = arrayChildren[i].getAttribute("as");
-						var selections = arraySelect[i].getElementsByClassName(listName);
-						if(selections != null){	
-							for (var i = 0; i < selections.length; i += 1)
-							{
-								var selectedOption = selections[i].options[selections[i].selectedIndex];
-								if(selectedOption.label !== "invalid") {
-									var doc = value.ownerDocument;
-									var addElement = doc.createElement("add");
-									addElement.setAttribute("value", selectedOption.value);
-
-									arrayChildren[0].appendChild(addElement);
+										eCoreHandler.generateECoreFromNsURI(this.graph, selectedOption.value);
+									}
 								}
 							}
+							
 						}
-						
 					}
 				}
 				

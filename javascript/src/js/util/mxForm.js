@@ -218,9 +218,6 @@ mxForm.prototype.addMultiCombo = function(name, array, selectedArray){
 		for (var i = 0; i < selectedArray.length; i++) {
 			insRow(table, array, name, selectedArray[i], true);
 		}
-		if(selectedArray.length < 2) {
-			table.firstElementChild.firstElementChild.lastElementChild.firstElementChild.disabled = true;
-		}
 	}
 	
 	var button = document.createElement("button");
@@ -237,12 +234,7 @@ mxForm.prototype.addMultiCombo = function(name, array, selectedArray){
 
 function deleteRow(table, button) {
 	var row = button.parentNode.parentNode;			
-	table.deleteRow(row.rowIndex);			
-	
-	var filas = table.rows.length;
-	// if(filas === 1) {
-	// 	table.firstElementChild.firstElementChild.lastElementChild.firstElementChild.disabled = true;
-	// }
+	table.deleteRow(row.rowIndex);
 }
 
 mxForm.prototype.addSingleCombo = function(name, array, selectedElement){

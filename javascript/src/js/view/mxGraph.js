@@ -1989,6 +1989,11 @@ mxGraph.prototype.graphModelChanged = function(changes)
 	this.removeSelectionCells(this.getRemovedCellsForChanges(changes));
 	this.view.validate();
 	this.sizeDidChange();
+	if (changes[0] instanceof mxRootChange){
+		eCoreHandler.removeEcores();
+		eCoreHandler.addECoreECore(this);
+		eCoreHandler.updateEcores(this, changes[0].root);
+	}
 	Vwqlvalidation.validate(this);
 };
 
