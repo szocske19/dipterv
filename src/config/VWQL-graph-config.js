@@ -82,6 +82,13 @@ class VWQLGraphConfig {
             }
             return `${label}`;
         }
+        if (template === "compare") {
+            var equality = cell.value.getAttribute('equality');
+            if (equality) {
+                return `==`;
+            }
+            return `!=`;
+        }
         if (template !== "edge") {
             return cell.value.getAttribute('name');
         }

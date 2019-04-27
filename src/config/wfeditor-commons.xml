@@ -41,9 +41,9 @@
 			</PathExpression>
 		</add>
 		<add as="compare">
-			<Compare name="Compare">
-				<mxCell vertex="1" style="compare">		
-					<mxGeometry as="geometry" width="60" height="50"/>
+			<Compare name="Compare" equality="true">
+				<mxCell edge="1" style="compare">
+					<mxGeometry as="geometry" isRelative="1"/>
 				</mxCell>
 			</Compare>
 		</add>
@@ -55,7 +55,7 @@
 			</Check>
 		</add>
 		<add as="patterncomposition">
-			<PatternComposition name="PatternComposition">
+			<PatternComposition name="PatternComposition" transitive="false" negative="false">
 				<mxCell vertex="1" style="patterncomposition">		
 					<mxGeometry as="geometry" width="60" height="50"/>
 				</mxCell>

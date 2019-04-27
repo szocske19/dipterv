@@ -14,9 +14,6 @@
 		<root>
 			<VWQL name="First VWQL" packageName="my.first.vwql" id="0">
 			<Array as="emfPackages">
-				<add value="org.eclipse.emf.ecore.EClass"/>
-				<add value="org.eclipse.emf.ecore.EPackage"/>
-				<add value="a"/>
 			</Array>
 		</VWQL>
 			<Layer name="Default Layer">
@@ -57,6 +54,11 @@
 			<add as="shape" value="arrow"/>
 			<add as="fillColor" value="red"/>
 		</add>
+		<add as="compare">
+			<add as="shape" value="connector"/>
+			<add as="endArrow" value="classic"/>
+			<add as="strokeColor" value="green"/>
+		</add>
 		<add as="swimlane">
 			<add as="shape" value="swimlane"/>
 			<add as="rounded" value="1"/>
@@ -91,11 +93,6 @@
 			<add as="align" value="center"/>
 			<add as="verticalAlign" value="middle"/>
 			<add as="strokeColor" value="blue"/>
-		</add>
-		<add as="compare">
-			<add as="shape" value="ellipse"/>
-			<add as="perimeter" value="ellipsePerimeter"/>
-			<add as="fillColor" value="red"/>
 		</add>
 		<add as="check">
 			<add as="shape" value="ellipse"/>

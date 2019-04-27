@@ -31,7 +31,7 @@
 	<separator name = "constraints"/>
 	<br/><hr/>
 	<add as="Path Expression" mode="connect" icon="images/connect.gif">VWQLEditorConfig.pathExpressionConnect</add>
-	<add as="Compare" template="compare" icon="images/symbols/small_event_intermediate.gif"/>
+	<add as="Compare" mode="connect" icon="images/symbols/small_event_intermediate.gif">VWQLEditorConfig.compareConnect</add>
 	<add as="Check" template="check" icon="images/symbols/small_event_end.gif"/>
 	<add as="Pattern Composition" template="patterncomposition"  icon="images/symbols/small_timer.gif"/>
 	<separator name = "Expressions"/>
