@@ -246,7 +246,7 @@ Jsonix.Request = Jsonix
 				var method = Jsonix.Util.Type.isString(options.method) ? options.method
 						: 'GET';
 				var async = Jsonix.Util.Type.isBoolean(options.async) ? options.async
-						: true;
+						: false;
 				var proxy = Jsonix.Util.Type.isString(options.proxy) ? options.proxy
 						: Jsonix.Request.PROXY;
 
