@@ -61,6 +61,10 @@ var eCoreHandler = {
     getECores() {
         return eCoreHandler.eCores;
     },
+
+    getECoreByNsURI(nsURI) {
+        return eCoreHandler.eCores.find(ecore => ecore.value.nsURI === nsURI);
+    },
  
     addECore(eCore) {
         var eClassifier;
@@ -302,6 +306,37 @@ var eCoreHandler = {
             case "EStringToStringMapEntry": return true;
             
             // TODO examine whether this is all variables (ecore.ecore)
+            default: return false;
+        }
+    },
+
+    getJavaName(typeName) {
+        switch (typeName) {
+            case "EBigDecimal": 
+            case "EBigInteger": 
+            case "EByte": 
+            case "EByteArray": 
+            case "EDouble": 
+            case "EString": 
+            case "EFloat": 
+            case "ELong": 
+            case "EShort": 
+            case "EBoolean": 
+            case "EBooleanObject": 
+            case "EByteObject": 
+            case "ECharacterObject": 
+            case "EDate": 
+            case "EDiagnosticChain": 
+            case "EEList": 
+            case "EInt": 
+            case "EEnumLiteral": 
+            case "EPackage": 
+            case "EClassifier": 
+            case "EStructuralFeature": 
+            case "EFeatureMapEntry": 
+            case "EDataType": 
+            case "EStringToStringMapEntry":
+            return typeName.substr(1);
             default: return false;
         }
     },

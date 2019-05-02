@@ -15,7 +15,7 @@ class VqlGenerator {
             result = result.concat("<br>");            
         }
          
-        return result; 
+        return `<pre>${result}</pre>`; 
     }
     
     static packageImportCode(root) {
@@ -23,7 +23,12 @@ class VqlGenerator {
         if (root.value.children[0] && root.value.children[0].getAttribute("as") === "emfPackages") {            
             for (var i = 0; i < root.value.children[0].children.length; i++) {
                 var emfPackage = root.value.children[0].children[i];
-                var element = `import ${emfPackage.getAttribute("value")}`;    
+                var nsURI = emfPackage.getAttribute("value");
+                var element = `import "${nsURI}"`;  
+                if (this.usingPrefixes) {
+                    var ecore = eCoreHandler.getECoreByNsURI(nsURI);
+                    element += ` as ${ecore.value.nsPrefix}`;
+                }  
                 result = result.concat(this.wrapperWithSpan("package", root.id, element));
                 result = result.concat("<br>");                
             }            
@@ -35,8 +40,9 @@ class VqlGenerator {
 
     static graphPatternCode(graphPattern) {
         var name = graphPattern.value.getAttribute("name");
+        var description = graphPattern.value.getAttribute("description");
 
-        var bodySeperator = `} or { <br>`;   
+        var bodySeperator = `} or {<br>`;   
         
         var parameterList = this.parameterListCode(graphPattern);
 
@@ -46,7 +52,7 @@ class VqlGenerator {
             bodies.push(this.patternBodyCode(patternbodies[i]));            
         }        
 
-        var element = `pattern ${name} ( ${parameterList} ){<br>  ${bodies.join(bodySeperator)}}`;
+        var element = `// ${description}<br>pattern ${name} ( ${parameterList}){<br>${bodies.join(bodySeperator)}}`;
 
         return this.wrapperWithSpan("pattern", graphPattern.id, element);
     }
@@ -63,16 +69,22 @@ class VqlGenerator {
             variablesCode.push(this.wrapperWithSpan("variable", variables[i].id, element));
         }
 
-        var pathexpressionCode = [];
+        var constraintCode = [];
         var pathexpressions = VwqlUtils.getElements(this.graph, body, "pathexpression");
         for (i = 0; i < pathexpressions.length; i++) {
             element = this.pathexpressionCode(pathexpressions[i]);
-            pathexpressionCode.push(this.wrapperWithSpan("pathexpression", pathexpressions[i].id, element));
+            constraintCode.push(this.wrapperWithSpan("pathexpression", pathexpressions[i].id, element));
+        }
+
+        var compare = VwqlUtils.getElements(this.graph, body, "compare");
+        for (i = 0; i < compare.length; i++) {
+            element = this.compareCode(compare[i]);
+            constraintCode.push(this.wrapperWithSpan("pathexpression", compare[i].id, element));
         }
         
         var bodyContent = variablesCode.join(`<br>${this.INDENTATION_START}`);
         bodyContent = bodyContent.concat(`<br>${this.INDENTATION_START}`);
-        bodyContent = bodyContent.concat(pathexpressionCode.join(`<br>${this.INDENTATION_START}`));
+        bodyContent = bodyContent.concat(constraintCode.join(`<br>${this.INDENTATION_START}`));
 
         return `${this.INDENTATION_START + this.wrapperWithSpan("patternbody", body.id, bodyContent)} <br>`;
     }
@@ -84,7 +96,7 @@ class VqlGenerator {
         for (var i = 0; i < parameters.length; i++) {
             var type = this.getTypeCode(parameters[i]);
             var name = parameters[i].value.getAttribute("name");        
-            var element = `${type}: ${name}`;
+            var element = `${name}: ${type}`;
             parametersCode.push(this.wrapperWithSpan("parameter", parameters[i].id, element));                
         }
 
@@ -111,33 +123,18 @@ class VqlGenerator {
     }
 
     static getTypeCode(cell) {
-        var invalidCellCode = this.getInvalidCellCode(cell);
-        if (invalidCellCode.length !== 0) {
-            return invalidCellCode;
+        if (!Vwqlvalidation.isValideCell(cell)) {
+            return `${this.errorCode("Invalid element")}`;
         }
         var type = cell.value.getAttribute("type");
         var eClassifier = eCoreHandler.getEClassifierByName(type);
         if (eClassifier.package.value.nsPrefix === "ecore") {
-            return `java ${eClassifier.name}`;
+            return `java ${eCoreHandler.getJavaName(eClassifier.name)}`;
+        } 
+        if (this.usingPrefixes) {
+            return `${type}`;
         }
-        return `${type}`;
-    }
-
-    static constraintCode(constraint) {
-        var invalidCellCode = this.getInvalidCellCode();
-        if (invalidCellCode.length !== 0) {
-            return invalidCellCode;
-        }
-
-        switch (template) {
-            case "pathexpression":
-           
-            element = this.pathexpressionCode(constraint); break;
-            default: 
-            element = "asd";
-        }
-
-        return this.wrapperWithSpan(template, constraint.id, element);
+        return `${eClassifier.name}`;            
     }
 
     static pathexpressionCode(pathexpression) {
@@ -145,14 +142,37 @@ class VqlGenerator {
         if (invalidCellCode.length !== 0) {
             return invalidCellCode;
         }
-        var sourceType = pathexpression.source.value.getAttribute("type");
-        var sourceClassifier = eCoreHandler.getEClassifierByName(sourceType);
+        var sourceName = pathexpression.source.value.getAttribute("type");
+        var sourceType = this.getTypeCode(pathexpression.source);
+        var sourceClassifier = eCoreHandler.getEClassifierByName(sourceName);
         var allReferences = eCoreHandler.getAllEStructuralFeaturesOfClassifier(sourceClassifier);
         var edgeTypeName = pathexpression.value.getAttribute("edgeType");
         var reference = allReferences.find(reference => eCoreHandler.getEReferenceFullName(reference) === edgeTypeName);
         var source = pathexpression.source.value.getAttribute("name");
         var target = pathexpression.target.value.getAttribute("name");
-        return `${sourceType}.${reference.name}(${source},${target});`;
+        
+        var element;
+        var template = pathexpression.value.nodeName.toLowerCase();        
+        if (reference) {
+            element = `${sourceType}.${reference.name}(${source},${target});`;
+        } else {
+            element = `${this.errorCode("Invalid element")}`;
+        }        
+        return this.wrapperWithSpan(template, pathexpression.id, element);
+    }
+
+    static compareCode(compare) {
+        var invalidCellCode = this.getInvalidCellCode(compare);
+        if (invalidCellCode.length !== 0) {
+            return invalidCellCode;
+        }
+        var source = compare.source.value.getAttribute("name");
+        var target = compare.target.value.getAttribute("name");
+        var equality = compare.value.getAttribute("equality");
+        var symbol = equality === "true" ? "==" : "!="; 
+        var element = `${source} ${symbol} ${target};`;
+        var template = compare.value.nodeName.toLowerCase();
+        return this.wrapperWithSpan(template, compare.id, element);
     }
 
     static getInvalidCellCode(cell) {
@@ -166,4 +186,5 @@ class VqlGenerator {
     }
 }
 
-VqlGenerator.INDENTATION_START = '&emsp;';
+VqlGenerator.INDENTATION_START = '	';
+VqlGenerator.usingPrefixes = true;

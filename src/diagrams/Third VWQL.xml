@@ -9,12 +9,12 @@
     <Layer name="Default Layer" id="1">
       <mxCell parent="0"/>
     </Layer>
-    <Pattern name="sameIpAdrdress" id="2">
+    <Pattern name="sameIpAdrdress" description="My first pattern" id="2">
       <mxCell style="swimlane;fillColor=#83027F;startSize=28;" parent="1" vertex="1" connectable="0" isSwimlane="1">
-        <mxGeometry x="240" y="170" width="350" height="492" as="geometry"/>
+        <mxGeometry x="90" y="110" width="350" height="492" as="geometry"/>
       </mxCell>
     </Pattern>
-    <PatternBody name="PatternBody1" description="" href="" id="3">
+    <PatternBody name="PatternBody1" id="3">
       <mxCell style="fontSize=9;" parent="2" vertex="1" connectable="0" port="2">
         <mxGeometry y="28" width="350" height="464" as="geometry"/>
       </mxCell>
@@ -25,12 +25,12 @@
       </mxCell>
     </PathExpression>
     <PathExpression name="PathExpression2" edgeType="HostInstance::nodeIp" id="17">
-      <mxCell style="pathexpression" edge="1" parent="3" source="15" target="4">
+      <mxCell style="pathexpression" parent="3" source="15" target="4" edge="1">
         <mxGeometry isRelative="1" as="geometry"/>
       </mxCell>
     </PathExpression>
     <Variable name="host2" type="cps::HostInstance" id="15">
-      <mxCell style="rounded" vertex="1" parent="3">
+      <mxCell style="rounded" parent="3" vertex="1">
         <mxGeometry x="50" y="154" width="80" height="30" as="geometry"/>
       </mxCell>
     </Variable>
@@ -44,11 +44,11 @@
         <mxGeometry x="200" y="254" width="80" height="30" as="geometry"/>
       </mxCell>
     </Variable>
-    <Edge name="1" description="" id="21">
-      <mxCell style="straightEdge" edge="1" parent="3" source="7" target="15">
+    <Compare name="Compare1" equality="true" id="21">
+      <mxCell style="compare" edge="1" parent="3" source="7" target="15">
         <mxGeometry isRelative="1" as="geometry"/>
       </mxCell>
-    </Edge>
+    </Compare>
     <Parameter name="host1" type="cps::HostInstance" id="6">
       <mxCell style="fontSize=9;shape=ellipse;resizable=0;" parent="2" vertex="1" port="1">
         <mxGeometry y="0.7625" width="32" height="32" relative="1" as="geometry">
@@ -56,25 +56,25 @@
         </mxGeometry>
       </mxCell>
     </Parameter>
-    <Edge name="1" description="" id="9">
+    <Edge name="1" id="9">
       <mxCell parent="2" source="5" target="4" edge="1">
         <mxGeometry x="-200" y="-180" isRelative="1" as="geometry"/>
       </mxCell>
     </Edge>
-    <Edge name="2" description="" id="10">
+    <Edge name="2" id="10">
       <mxCell parent="2" source="6" target="7" edge="1">
         <mxGeometry x="-200" y="-180" isRelative="1" as="geometry"/>
       </mxCell>
     </Edge>
     <Parameter name="host2" type="cps::HostInstance" id="13">
-      <mxCell style="fontSize=9;shape=ellipse;resizable=0;" vertex="1" port="1" parent="2">
+      <mxCell style="fontSize=9;shape=ellipse;resizable=0;" parent="2" vertex="1" port="1">
         <mxGeometry y="0.29654471544715444" width="32" height="32" relative="1" as="geometry">
           <mxPoint x="-16" y="-16" as="offset"/>
         </mxGeometry>
       </mxCell>
     </Parameter>
-    <Edge name="3" description="" id="16">
-      <mxCell edge="1" parent="2" source="13" target="15">
+    <Edge name="3" id="16">
+      <mxCell parent="2" source="13" target="15" edge="1">
         <mxGeometry x="-710" y="-198" isRelative="1" as="geometry"/>
       </mxCell>
     </Edge>
