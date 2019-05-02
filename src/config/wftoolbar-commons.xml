@@ -67,6 +67,8 @@
 	<br/><hr/>
 	<add as="outline" action="toggleOutline" icon="images/outline.gif"/>
 	<add as="tasks" action="toggleTasks" icon="images/tasks.gif"/>
+	<add as="vql" action="toggleVqlViewer" icon="images/tasks.gif"/>
+	<add as="xml" action="toggleXmlViewer" icon="images/tasks.gif"/>
 	<add as="help" action="toggleHelp" icon="images/help.gif"/>
 	<add as="console" action="toggleConsole" icon="images/console.gif"/>
 </mxVWQLToolbar>

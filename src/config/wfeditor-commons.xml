@@ -13,7 +13,7 @@
 	</Array>
 	<Array as="templates">
 		<add as="pattern">
-			<Pattern name="Pattern">
+			<Pattern name="Pattern" description="">
 				<mxCell vertex="1" style="swimlane" connectable="0" isSwimlane="1">
 					<mxGeometry as="geometry" width="220" height="480"/>
 				</mxCell>
@@ -27,7 +27,7 @@
 			</Parameter>
 		</add>
 		<add as="patternBody">
-			<PatternBody name="PatternBody" description="" href="">
+			<PatternBody name="PatternBody">
 				<mxCell vertex="1" style="fontSize=9;" connectable="0" port="2">		
 					<mxGeometry as="geometry" width="200" height="60"/>
 				</mxCell>
@@ -75,7 +75,7 @@
 			</Group>
 		</add>
 		<add as="edge">
-			<Edge name="" description="">
+			<Edge name="">
 				<mxCell edge="1">
 					<mxGeometry as="geometry" isRelative="1"/>
 				</mxCell>
@@ -139,4 +139,7 @@
 		</add>
 	</Array>
 	<add as="createTasks">VWQLEditorConfig.createTasks</add>
+	<add as="showVqlViewer">VWQLEditorConfig.showVqlViewer</add>
+	<add as="showXmlViewer">VWQLEditorConfig.showXmlViewer</add>
+	<add as="syntaxHighlight">VWQLEditorConfig.syntaxHighlight</add>
 </mxEditor>

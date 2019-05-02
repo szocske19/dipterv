@@ -3,6 +3,8 @@ class VWQLEditorConfig {
         // Disables removing cells from parents
         this.graph.graphHandler.setRemoveCellsFromParent(false);
         this.showTasks();
+        this.showVqlViewer();
+        this.showXmlViewer();
         var graph = this.graph;
         var model = graph.getModel();
 
@@ -162,6 +164,28 @@ class VWQLEditorConfig {
                     editor.showProperties(cell);             
             }
         };
+
+        this.addAction('toggleVqlViewer', (editor) => {
+            if (editor.vqlViewer != null)
+            {
+                editor.vqlViewer.setVisible(!editor.vqlViewer.isVisible());
+            }
+            else
+            {
+                editor.showVqlViewer();
+            }
+        });
+
+        this.addAction('toggleXmlViewer', (editor) => {
+            if (editor.xmlViewer != null)
+            {
+                editor.xmlViewer.setVisible(!editor.xmlViewer.isVisible());
+            }
+            else
+            {
+                editor.showXmlViewer();
+            }
+        });
     }
 
     static isProperParent(cell, parent) {
@@ -546,5 +570,121 @@ class VWQLEditorConfig {
             
             mxUtils.br(div);
         }
+    }
+
+    static showVqlViewer() {
+        if (this.vqlViewer == null) {
+            var tbl = document.createElement('table');
+            var tbdy = document.createElement('tbody');
+            var tr1 = document.createElement('tr');
+            var td1 = document.createElement('td');
+            var tr2 = document.createElement('tr');
+            var td2 = document.createElement('td');
+            var button = mxUtils.button('Generate vql', () => {
+                var output = VqlGenerator.generate(this.graph);
+                td2.innerHTML = output;
+            });
+
+            tbl.appendChild(tbdy);
+            tbdy.appendChild(tr1);
+            tbdy.appendChild(tr2);
+            tr1.appendChild(td1);
+            td1.appendChild(button);
+            tr2.appendChild(td2);
+            td2.setAttribute("contenteditable", "true");
+
+
+            tbl.setAttribute("width", "100%");
+            tbl.setAttribute("height", "100%");
+            tr2.setAttribute("height", "100%");
+            
+            var w = document.body.clientWidth;
+            var wnd = new mxWindow('Vql Viewer',
+                tbl, w - 420, 200, 400, 100);
+            wnd.setClosable(true);
+            wnd.setScrollable(true);
+            wnd.setResizable(true);
+            wnd.destroyOnClose = false;
+            
+            // Assigns the icon to the tasks window
+            if (this.tasksWindowImage != null)
+            {
+                wnd.setImage(this.tasksWindowImage);
+            }
+            
+            this.vqlViewer = wnd;
+        }
+        
+        
+        this.vqlViewer.setVisible(true);
+    }
+
+    static showXmlViewer() {
+        if (this.xmlViewer == null) {
+            var tbl = document.createElement('table');
+            var tbdy = document.createElement('tbody');
+            var tr1 = document.createElement('tr');
+            var td1 = document.createElement('td');
+            var tr2 = document.createElement('tr');
+            var td2 = document.createElement('td');
+            var button = mxUtils.button('Show xml', () => {
+                var encoder = new mxCodec();
+                var node = encoder.encode(this.graph.getModel());
+                var xml = mxUtils.getPrettyXml(node);
+                var output = `<pre>${this.syntaxHighlight(xml)}</pre>`;
+                td2.innerHTML = output;
+            });
+
+            tbl.appendChild(tbdy);
+            tbdy.appendChild(tr1);
+            tbdy.appendChild(tr2);
+            tr1.appendChild(td1);
+            td1.appendChild(button);
+            tr2.appendChild(td2);
+            td2.setAttribute("contenteditable", "true");
+
+
+            tbl.setAttribute("width", "100%");
+            tbl.setAttribute("height", "100%");
+            tr2.setAttribute("height", "100%");
+            
+            var w = document.body.clientWidth;
+            var wnd = new mxWindow('Xml Viewer',
+                tbl, w - 420, 400, 400, 100);
+            wnd.setClosable(true);
+            wnd.setScrollable(true);
+            wnd.setResizable(true);
+            wnd.destroyOnClose = false;
+            
+            // Assigns the icon to the tasks window
+            if (this.tasksWindowImage != null)
+            {
+                wnd.setImage(this.tasksWindowImage);
+            }
+            
+            this.xmlViewer = wnd;
+        }
+        
+        
+        this.xmlViewer.setVisible(true);
+    }
+
+    static syntaxHighlight(json) {
+        json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, (match) => {
+            var cls = 'number';
+            if (/^"/.test(match)) {
+                if (/:$/.test(match)) {
+                    cls = 'key';
+                } else {
+                    cls = 'string';
+                }
+            } else if (/true|false/.test(match)) {
+                cls = 'boolean';
+            } else if (/null/.test(match)) {
+                cls = 'null';
+            }
+            return `<span class="${cls}">${match}</span>`;
+        });
     }
 }
