@@ -110,7 +110,7 @@ mxForm.prototype.addCheckbox = function(name, value)
 	this.addField(name, input);
 
 	// IE can only change the checked value if the input is inside the DOM
-	if (value)
+	if (value === "true" || value === true)
 	{
 		input.checked = true;
 	}

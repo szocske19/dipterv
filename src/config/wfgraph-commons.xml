@@ -56,7 +56,7 @@
 		</add>
 		<add as="compare">
 			<add as="shape" value="connector"/>
-			<add as="endArrow" value="classic"/>
+			<add as="endArrow" value="none"/>
 			<add as="strokeColor" value="green"/>
 		</add>
 		<add as="swimlane">

@@ -2520,12 +2520,13 @@ mxEditor.prototype.createProperties = function (cell)
 		var eEnumNames = eCoreHandler.getEEnumNames();
 		var eEnumLiteralNames = eCoreHandler.getEEnumLiteralNames();
 		
+		var template = cell.value.nodeName.toLowerCase();
 		for (var i = 0; i < attrs.length; i++)
 		{
 			// Creates a textarea with more lines for
 			// the cell label
+			var val = attrs[i].value;
 			if (attrs[i].nodeName.toLowerCase() === "type") {
-				var val = attrs[i].value;
 				texts[i] = form.addSingleCombo("type", eClassNames, val);
 			} else if (attrs[i].nodeName.toLowerCase() === "edgetype") {
 				var sourceType = cell.source.value.getAttribute("type");
@@ -2538,25 +2539,20 @@ mxEditor.prototype.createProperties = function (cell)
 				}				
 				var allReferencesNames = eCoreHandler.getEReferencesFullName(allReferences);
 
-				var val = attrs[i].value;
 				texts[i] = form.addSingleCombo("edgetype", allReferencesNames, val);
 			} else if (attrs[i].nodeName.toLowerCase() === "value") {
-				var template = cell.value.nodeName.toLowerCase();
 				if(template === "enumliteral"){
-					var val = attrs[i].value;
 					texts[i] = form.addSingleCombo("value", eEnumLiteralNames, val);
 				} else if(template === "stringliteral"){
-					var val = attrs[i].value;
 					texts[i] = form.addText("value", val);
 				} else if(template === "booleanliteral"){
-					var val = attrs[i].value;
 					texts[i] = form.addCheckbox("value", val);
 				} else if(template === "numberliteral"){
-					var val = attrs[i].value;
 					texts[i] = form.addText("value", val, "number");
 				}
+			} else if (attrs[i].nodeName.toLowerCase() === "equality") {
+				texts[i] = form.addCheckbox("value", val);
 			} else if (attrs[i].nodeName.toLowerCase() !== "id") {
-				var val = attrs[i].value;
 				texts[i] = form.addTextarea(attrs[i].nodeName, val,
 					(attrs[i].nodeName == 'label') ? 4 : 2);
 			}
@@ -2620,19 +2616,22 @@ mxEditor.prototype.createProperties = function (cell)
 				for (var i=0; i<attrs.length; i++)
 				{
 					var textValue = texts[i].value
-					if (attrs[i].nodeName.toLowerCase() === "type" 
-						|| attrs[i].nodeName.toLowerCase() === "edgetype" ) {
+					var attributeName = attrs[i].nodeName.toLowerCase();
+					if (attributeName === "type" 
+						|| attributeName === "edgetype" ) {
 						var selection = texts[i].getElementsByClassName(attrs[i].nodeName)[0];
 						textValue = selection.options[selection.selectedIndex].value;
-					} else if (attrs[i].nodeName.toLowerCase() === "value") {
+					} else if (attributeName === "value") {
 						if(template === "enumliteral") {
 							var selection = texts[i].getElementsByClassName(attrs[i].nodeName)[0];
 							textValue = selection.options[selection.selectedIndex].value;
 						} else if(template === "booleanliteral") {
 							textValue = texts[i].checked ? "true" : "false";
 						}
+					} else if (attributeName === "equality") {
+						textValue = texts[i].checked ? "true" : "false";
 					}
-					if (attrs[i].nodeName.toLowerCase() !== "id") {
+					if (attributeName !== "id") {
 						var edit = new mxCellAttributeChange(
 							cell, attrs[i].nodeName,
 							textValue);

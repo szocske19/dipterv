@@ -56,7 +56,7 @@ class VWQLGraphConfig {
         if (template === "enumliteral") {
             label = cell.value.getAttribute('value');
             nameTags = eCoreHandler.separatedNameTags(label);
-            if (nameTags.length === 2) {
+            if (nameTags.length === 3) {
                 return `${nameTags[1]}::${nameTags[2]}`;
             } 
             return "";            
@@ -84,7 +84,7 @@ class VWQLGraphConfig {
         }
         if (template === "compare") {
             var equality = cell.value.getAttribute('equality');
-            if (equality) {
+            if (equality === "true") {
                 return `==`;
             }
             return `!=`;
