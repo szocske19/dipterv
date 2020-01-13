@@ -1,4 +1,4 @@
-<mxfile modified="2020-01-13T15:54:36.119Z" host="www.draw.io" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36" etag="YJzD2QGisp1C8ue-ujo4" version="12.5.1" type="github" pages="11">
+<mxfile modified="2020-01-13T16:09:47.994Z" host="www.draw.io" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36" etag="IDQ13p_OaTvfx45WJmAE" version="12.5.1" type="github" pages="11">
   <diagram id="GjH9siLiESUylxoSrceC" name="Page-1">
     <mxGraphModel dx="2889" dy="713" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -417,13 +417,13 @@
         <mxCell id="G5FtGQ0pIA2Z2l_X3SJ9-28" value="VIATRA&lt;br style=&quot;font-size: 18px;&quot;&gt;" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#f0a30a;fontColor=#000000;strokeWidth=4;fontSize=18;" parent="G5FtGQ0pIA2Z2l_X3SJ9-27" vertex="1">
           <mxGeometry y="49.00900900900901" width="120" height="30.990990990990994" as="geometry"/>
         </mxCell>
-        <mxCell id="G5FtGQ0pIA2Z2l_X3SJ9-29" value="" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#6a00ff;fontColor=#ffffff;strokeWidth=4;fontSize=18;" parent="G5FtGQ0pIA2Z2l_X3SJ9-27" vertex="1">
+        <mxCell id="G5FtGQ0pIA2Z2l_X3SJ9-29" value="&lt;span style=&quot;font-size: 14px ; white-space: normal&quot;&gt;saját megvalósítás&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#6a00ff;fontColor=#ffffff;strokeWidth=4;fontSize=18;" parent="G5FtGQ0pIA2Z2l_X3SJ9-27" vertex="1">
           <mxGeometry x="120" y="49.00900900900901" width="120" height="30.990990990990994" as="geometry"/>
         </mxCell>
         <mxCell id="G5FtGQ0pIA2Z2l_X3SJ9-30" value="VQL generálás&lt;br style=&quot;font-size: 18px&quot;&gt;" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=#d6b656;fillColor=#fff2cc;gradientColor=#ffd966;verticalAlign=top;horizontal=1;labelPosition=center;verticalLabelPosition=middle;align=center;container=1;collapsible=0;fontSize=18;" parent="G5FtGQ0pIA2Z2l_X3SJ9-1" vertex="1">
           <mxGeometry x="220" y="343" width="240" height="94" as="geometry"/>
         </mxCell>
-        <mxCell id="G5FtGQ0pIA2Z2l_X3SJ9-31" value="" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#6a00ff;fontColor=#ffffff;strokeWidth=4;fontSize=18;" parent="G5FtGQ0pIA2Z2l_X3SJ9-30" vertex="1">
+        <mxCell id="G5FtGQ0pIA2Z2l_X3SJ9-31" value="&lt;span style=&quot;font-size: 14px ; white-space: normal&quot;&gt;saját megvalósítás&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#6a00ff;fontColor=#ffffff;strokeWidth=4;fontSize=18;" parent="G5FtGQ0pIA2Z2l_X3SJ9-30" vertex="1">
           <mxGeometry x="120" y="56.31531531531532" width="120" height="36.414414414414416" as="geometry"/>
         </mxCell>
         <mxCell id="G5FtGQ0pIA2Z2l_X3SJ9-32" value="XTend&lt;br style=&quot;font-size: 18px;&quot;&gt;" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#f0a30a;fontColor=#000000;strokeWidth=4;fontSize=18;" parent="G5FtGQ0pIA2Z2l_X3SJ9-30" vertex="1">
